@@ -157,78 +157,109 @@
         
         <!-- Navigation -->
         <nav class="fixed top-0 w-full z-[100] px-4 md:px-8 py-4">
-            <div class="max-w-6xl mx-auto crystal-water-header px-4 py-2 flex justify-between items-center rounded-full relative z-50">
-                <a href="../index.html" class="text-lg font-bold tracking-tight z-10 flex items-center text-white/90 hover:opacity-80 transition-opacity">
-                    <div class="w-8 h-8 rounded-full overflow-hidden mr-3 border border-white/10 shadow-lg">
-                        <img src="../favicon.jpg" alt="Htet Zaw Paing" class="w-full h-full object-cover">
+            <div
+                class="max-w-6xl mx-auto crystal-water-header px-4 py-2 flex justify-between items-center rounded-full relative z-50">
+                <a href="index.html"
+                    class="text-lg font-bold tracking-tight z-10 flex items-center text-white/90">
+                    <div
+                        class="w-8 h-8 rounded-full overflow-hidden mr-3 border border-white/10 shadow-lg">
+                        <img
+                            src="favicon.jpg"
+                            alt="Htet Zaw Paing"
+                            class="w-full h-full object-cover">
                     </div>
-                    HZP.
+                    HZP<span class="text-blue-600">.</span>
                 </a>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex relative space-x-1 items-center text-[11px] font-semibold tracking-wide uppercase">
                     <div id="liquid-pill" class="liquid-pill"></div>
                     
+                    <!-- Home with Dropdown -->
                     <div class="dropdown-wrapper relative group flex items-center">
-                        <a href="../index.html" class="nav-link flex items-center gap-1" data-en="Home" data-mm="ပင်မ">
+                        <a href="index.html" class="nav-link flex items-center gap-1 active" data-en="Home" data-mm="ပင်မ">
                             Home <i data-lucide="chevron-down" class="w-3 h-3 opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item" data-en="Identity" data-mm="ကိုယ်ရေးအကျဉ်း">Identity</a>
-                            <a href="../projects/index.html" class="dropdown-item" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
-                            <a href="../expertise/index.html" class="dropdown-item" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
-                            <a href="../lab/index.html" class="dropdown-item" data-en="News" data-mm="သတင်းလွှာ">News</a>
+                            <a href="#person" class="dropdown-item" data-en="Identity" data-mm="ကိုယ်ရေးအကျဉ်း">Identity</a>
+                            <a href="#projects" class="dropdown-item" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
+                            <a href="#specialization" class="dropdown-item" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
+                            <a href="news" class="dropdown-item" data-en="News" data-mm="သတင်းလွှာ">News</a>
                         </div>
                     </div>
 
-                    <a href="#" class="nav-link active" data-en="Profile" data-mm="ကိုယ်ရေးအကျဉ်း">Profile</a>
-                    <a href="../projects/index.html" class="nav-link" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
-                    <a href="../expertise/index.html" class="nav-link" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
-                    <a href="../lab/index.html" class="nav-link" data-en="Lab" data-mm="ဓာတ်ခွဲခန်း">Lab</a>
+                    <!-- Top Level Links -->
+                    <a href="/about" class="nav-link" data-en="Profile" data-mm="ကိုယ်ရေးအကျဉ်း">Profile</a>
+                    <a href="/upcoming" class="nav-link" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
+                    <a href="/upcoming" class="nav-link" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
+                    <a href="/upcoming" class="nav-link" data-en="Lab" data-mm="ဓာတ်ခွဲခန်း">Lab</a>
                 </div>
 
                 <!-- Desktop Actions -->
                 <div class="hidden md:flex items-center gap-3 z-10">
-                    <button id="lang-toggle" class="px-4 py-2 glass-card rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-2 text-white/80 border-white/5 bg-transparent cursor-pointer">
-                        <i data-lucide="languages" class="w-3.5 h-3.5 opacity-70"></i>
+                    <button id="lang-toggle"
+                        class="btn-crystal px-4 py-2 glass-card rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-2 text-white/80 border-white/5 bg-transparent hover:bg-white/5">
+                        <i data-lucide="languages"
+                            class="w-3.5 h-3.5 opacity-70"></i>
                         <span id="lang-text">EN</span>
                     </button>
 
-                    <a href="#contact-footer" class="px-6 py-2.5 bg-blue-700 text-white text-[10px] font-bold uppercase rounded-full shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:bg-blue-500 border border-gray-600 transition-colors">
-                        <span data-en="Connect" data-mm="ဆက်သွယ်ရန်">Connect</span>
+                    <a href="/profile"
+                        class="btn-crystal px-6 py-2.5 bg-blue-700 text-white text-[10px] font-bold uppercase rounded-full shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:bg-blue-500 border border-gray-600">
+                        <span data-en="Connect"
+                            data-mm="ဆက်သွယ်ရန်">Connect</span>
                     </a>
                 </div>
 
                 <!-- Mobile Hamburger Button -->
-                <button id="menu-toggle" class="md:hidden z-50 p-2 text-white/80 hover:text-white transition-colors">
+                <button id="menu-toggle"
+                    class="md:hidden z-50 p-2 text-white/80 hover:text-white transition-colors">
                     <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <!-- Mobile Slide-out Menu -->
-            <div id="mobile-menu" class="fixed inset-0 z-[60] bg-[#050505]/98 backdrop-blur-3xl transform translate-x-full flex flex-col justify-center items-center gap-8">
-                <button id="menu-close" class="absolute top-8 right-8 p-2 text-white/50 hover:text-white transition-colors">
+            <div id="mobile-menu"
+                class="fixed inset-0 z-[60] bg-[#050505]/98 backdrop-blur-3xl transform translate-x-full flex flex-col justify-center items-center gap-8">
+                <button id="menu-close"
+                    class="absolute top-8 right-8 p-2 text-white/50 hover:text-white transition-colors">
                     <i data-lucide="x" class="w-8 h-8"></i>
                 </button>
 
-                <div class="flex flex-col items-center gap-6 text-sm font-bold tracking-[0.15em] uppercase">
-                    <a href="../index.html" class="mobile-nav-link text-white/60 hover:text-white transition-all" data-en="Home" data-mm="ပင်မ">Home</a>
-                    <a href="#" class="mobile-nav-link text-white transition-all" data-en="Profile" data-mm="ကိုယ်ရေးအကျဉ်း">Profile</a>
-                    <a href="../projects/index.html" class="mobile-nav-link text-white/60 hover:text-white transition-all" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
-                    <a href="../expertise/index.html" class="mobile-nav-link text-white/60 hover:text-white transition-all" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
-                    <a href="../lab/index.html" class="mobile-nav-link text-white/60 hover:text-white transition-all" data-en="Lab" data-mm="ဓာတ်ခွဲခန်း">Lab</a>
+                <div
+                    class="flex flex-col items-center gap-6 text-sm font-bold tracking-[0.15em] uppercase">
+                    <a href="index.html"
+                        class="mobile-nav-link text-white transition-all"
+                        data-en="Home" data-mm="ပင်မ">Home</a>
+                    <a href="/about"
+                        class="mobile-nav-link text-white/60 hover:text-white transition-all"
+                        data-en="Profile" data-mm="ကိုယ်ရေးအကျဉ်း">Profile</a>
+                    <a href="/upcoming"
+                        class="mobile-nav-link text-white/60 hover:text-white transition-all"
+                        data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
+                    <a href="/upcoming"
+                        class="mobile-nav-link text-white/60 hover:text-white transition-all"
+                        data-en="Expertise"
+                        data-mm="ကျွမ်းကျင်မှု">Expertise</a>
+                    <a href="/upcoming"
+                        class="mobile-nav-link text-white/60 hover:text-white transition-all"
+                        data-en="Lab" data-mm="ဓာတ်ခွဲခန်း">Lab</a>
                 </div>
 
                 <div class="w-12 h-[1px] bg-white/10"></div>
 
                 <div class="flex flex-col items-center gap-5">
-                    <button id="mobile-lang-toggle" class="px-6 py-3 glass-card bg-transparent rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-                        <i data-lucide="languages" class="w-4 h-4 text-white/50"></i>
+                    <button id="mobile-lang-toggle"
+                        class="px-6 py-3 glass-card bg-transparent rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="languages"
+                            class="w-4 h-4 text-white/50"></i>
                         <span id="mobile-lang-text">EN</span>
                     </button>
 
-                    <a href="#contact-footer" class="px-8 py-3 bg-blue-700 text-white text-xs font-bold uppercase rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                        <span data-en="Connect" data-mm="ဆက်သွယ်ရန်">Connect</span>
+                    <a href="/profile"
+                        class="px-8 py-3 bg-blue-700 text-white text-xs font-bold uppercase rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                        <span data-en="Connect"
+                            data-mm="ဆက်သွယ်ရန်">Connect</span>
                     </a>
                 </div>
             </div>
