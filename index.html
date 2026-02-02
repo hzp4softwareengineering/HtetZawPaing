@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- 1. Technical Meta Tags -->
+    <!-- 1. Technical Meta Tags -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -104,7 +103,7 @@
         ]
         </script>
 
-        <!-- 7. Assets & Resources -->
+        <!-- Assets & Resources -->
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -342,6 +341,50 @@
         
         .nav-link:hover { color: #fff; }
 
+        /* Dropdown Menu Styles */
+        .dropdown-wrapper {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            min-width: 160px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--ease-fluid);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            z-index: 100;
+        }
+
+        .dropdown-wrapper:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(8px);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 16px;
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
         .text-accent-gradient {
             background: linear-gradient(135deg, #fff 0%, #002fff 100%);
             -webkit-background-clip: text;
@@ -358,6 +401,24 @@
             left: 20px; top: 0; bottom: 0;
             width: 1px;
             background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        /* Form Styles */
+        .input-crystal {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .input-crystal:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(10, 132, 255, 0.5);
+            outline: none;
+            box-shadow: 0 0 20px rgba(10, 132, 255, 0.1);
+        }
+        .input-crystal::placeholder {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -379,33 +440,40 @@
         <nav class="fixed top-0 w-full z-[100] px-4 md:px-8 py-4">
             <div
                 class="max-w-6xl mx-auto crystal-water-header px-4 py-2 flex justify-between items-center rounded-full relative z-50">
-                <div
+                <a href="index.html"
                     class="text-lg font-bold tracking-tight z-10 flex items-center text-white/90">
                     <div
                         class="w-8 h-8 rounded-full overflow-hidden mr-3 border border-white/10 shadow-lg">
                         <img
-                            src="/favicon.jpg"
+                            src="favicon.jpg"
                             alt="Htet Zaw Paing"
                             class="w-full h-full object-cover">
                     </div>
-                    HZP.
-                </div>
+                    HZP<span class="text-blue-600">.</span>
+                </a>
 
                 <!-- Desktop Menu -->
-                <div
-                    class="hidden md:flex relative space-x-1 items-center text-[11px] font-semibold tracking-wide uppercase">
+                <div class="hidden md:flex relative space-x-1 items-center text-[11px] font-semibold tracking-wide uppercase">
                     <div id="liquid-pill" class="liquid-pill"></div>
-                    <a href="#home" class="nav-link" data-en="Home"
-                        data-mm="ပင်မ">Home</a>
-                    <a href="#person" class="nav-link" data-en="Identity"
-                        data-mm="ကိုယ်ရေးအကျဉ်း">Identity</a>
-                    <a href="#projects" class="nav-link" data-en="Projects"
-                        data-mm="စီမံကိန်းများ">Projects</a>
-                    <a href="#specialization" class="nav-link"
-                        data-en="Expertise"
-                        data-mm="ကျွမ်းကျင်မှု">Expertise</a>
-                    <a href="#news" class="nav-link" data-en="News"
-                        data-mm="သတင်းလွှာ">News</a>
+                    
+                    <!-- Home with Dropdown -->
+                    <div class="dropdown-wrapper relative group flex items-center">
+                        <a href="index.html" class="nav-link flex items-center gap-1 active" data-en="Home" data-mm="ပင်မ">
+                            Home <i data-lucide="chevron-down" class="w-3 h-3 opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#person" class="dropdown-item" data-en="Identity" data-mm="ကိုယ်ရေးအကျဉ်း">Identity</a>
+                            <a href="#projects" class="dropdown-item" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
+                            <a href="#specialization" class="dropdown-item" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
+                            <a href="news" class="dropdown-item" data-en="News" data-mm="သတင်းလွှာ">News</a>
+                        </div>
+                    </div>
+
+                    <!-- Top Level Links -->
+                    <a href="/about" class="nav-link" data-en="Profile" data-mm="ကိုယ်ရေးအကျဉ်း">Profile</a>
+                    <a href="/upcoming" class="nav-link" data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
+                    <a href="/upcoming" class="nav-link" data-en="Expertise" data-mm="ကျွမ်းကျင်မှု">Expertise</a>
+                    <a href="/upcoming" class="nav-link" data-en="Lab" data-mm="ဓာတ်ခွဲခန်း">Lab</a>
                 </div>
 
                 <!-- Desktop Actions -->
@@ -441,22 +509,22 @@
 
                 <div
                     class="flex flex-col items-center gap-6 text-sm font-bold tracking-[0.15em] uppercase">
-                    <a href="#home"
-                        class="mobile-nav-link text-white/60 hover:text-white transition-all"
+                    <a href="index.html"
+                        class="mobile-nav-link text-white transition-all"
                         data-en="Home" data-mm="ပင်မ">Home</a>
-                    <a href="#person"
+                    <a href="/about"
                         class="mobile-nav-link text-white/60 hover:text-white transition-all"
-                        data-en="Identity" data-mm="ကိုယ်ရေးအကျဉ်း">Identity</a>
-                    <a href="#projects"
+                        data-en="Profile" data-mm="ကိုယ်ရေးအကျဉ်း">Profile</a>
+                    <a href="/upcoming"
                         class="mobile-nav-link text-white/60 hover:text-white transition-all"
                         data-en="Projects" data-mm="စီမံကိန်းများ">Projects</a>
-                    <a href="#specialization"
+                    <a href="/upcoming"
                         class="mobile-nav-link text-white/60 hover:text-white transition-all"
                         data-en="Expertise"
                         data-mm="ကျွမ်းကျင်မှု">Expertise</a>
-                    <a href="#news"
+                    <a href="/upcoming"
                         class="mobile-nav-link text-white/60 hover:text-white transition-all"
-                        data-en="News" data-mm="သတင်းလွှာ">News</a>
+                        data-en="Lab" data-mm="ဓာတ်ခွဲခန်း">Lab</a>
                 </div>
 
                 <div class="w-12 h-[1px] bg-white/10"></div>
@@ -469,7 +537,6 @@
                         <span id="mobile-lang-text">EN</span>
                     </button>
 
-                    <!-- CHANGED: Link to profile -->
                     <a href="/profile"
                         class="px-8 py-3 bg-blue-700 text-white text-xs font-bold uppercase rounded-full shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                         <span data-en="Connect"
@@ -483,7 +550,7 @@
         <section id="home"
             class="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 text-center pt-20 relative">
 
-            <!-- NEW: Vibrant Gradient Atmosphere -->
+            <!-- Vibrant Gradient Atmosphere -->
             <div class="hero-aurora"></div>
 
             <div class="space-y-6 md:space-y-8 max-w-4xl relative z-10">
@@ -506,7 +573,7 @@
                     <div
                         class="relative w-full h-full rounded-full p-1.5 glass-card overflow-hidden shadow-2xl border-white/10">
                         <img
-                            src="/favicon.jpg"
+                            src="favicon.jpg"
                             alt="Htet Zaw Paing"
                             class="w-full h-full object-cover rounded-full">
                     </div>
@@ -545,8 +612,7 @@
                         <span class="font-semibold text-sm">+95
                             9456751882</span>
                     </a>
-                    <!-- CHANGED: Explore Identity -> Download CV -->
-                    <a href="/cv.pdf" download="Htet_Zaw_Paing_CV.pdf"
+                    <a href="cv.pdf" download="Htet_Zaw_Paing_CV.pdf"
                         class="btn-crystal w-full sm:w-auto px-8 py-3.5 bg-blue-600 rounded-2xl font-semibold text-sm shadow-lg shadow-blue-500/20 text-center hover:bg-blue-500 text-white flex justify-center items-center gap-2">
                          <i data-lucide="download" class="w-4 h-4"></i>
                         <span data-en="Download CV"
@@ -624,7 +690,7 @@
                             <div
                                 class="w-full h-[280px] md:h-[400px] rounded-[20px] overflow-hidden mb-6 border border-white/5 shadow-inner">
                                 <img
-                                    src="/favicon.jpg"
+                                    src="favicon.jpg"
                                     alt="Htet Zaw Paing"
                                     class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                             </div>
@@ -661,7 +727,7 @@
                         <div
                             class="glass-card p-6 md:p-8 hover:bg-white/[0.02]">
                             <span
-                                class="text-blue-400 font-bold text-[10px] tracking-wider mb-2 block">CURRENT
+                                class="text-blue-400 font-bold text-[10px] tracking-wider mb-2 block" data-en="CURRENT - 2026" data-mm="လက်ရှိ - ၂၀၂၆">CURRENT
                                 - 2026</span>
                             <h3 class="text-xl md:text-2xl font-bold mb-2">Bsc
                                 (Hons) in
@@ -868,7 +934,7 @@
                                     class="w-6 h-6"></i>
                             </div>
                             <span
-                                class="font-bold text-[10px] uppercase tracking-[0.2em] text-white/80">Security
+                                class="font-bold text-[10px] uppercase tracking-[0.2em] text-white/80" data-en="Security Systems" data-mm="လုံခြုံရေး စနစ်များ">Security
                                 Systems</span>
                         </div>
                         <div
@@ -878,7 +944,7 @@
                                 <i data-lucide="cpu" class="w-6 h-6"></i>
                             </div>
                             <span
-                                class="font-bold text-[10px] uppercase tracking-[0.2em] text-white/80">AI
+                                class="font-bold text-[10px] uppercase tracking-[0.2em] text-white/80" data-en="AI Integration" data-mm="AI ပေါင်းစပ်ခြင်း">AI
                                 Integration</span>
                         </div>
                     </div>
@@ -888,7 +954,7 @@
                     <div class="space-y-3">
                         <div
                             class="flex justify-between text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
-                            <span>Front & Backend Systems</span>
+                            <span data-en="Front & Backend Systems" data-mm="ရှေ့နှင့်နောက်ပိုင်း စနစ်များ">Front & Backend Systems</span>
                             <span class="text-blue-500">98%</span>
                         </div>
                         <div
@@ -901,7 +967,7 @@
                     <div class="space-y-3">
                         <div
                             class="flex justify-between text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
-                            <span>Web Technologies</span>
+                            <span data-en="Web Technologies" data-mm="ဝက်ဘ် နည်းပညာများ">Web Technologies</span>
                             <span class="text-purple-500">92%</span>
                         </div>
                         <div
@@ -914,7 +980,7 @@
                     <div class="space-y-3">
                         <div
                             class="flex justify-between text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
-                            <span>AI Research</span>
+                            <span data-en="AI Research" data-mm="AI သုတေသန">AI Research</span>
                             <span class="text-cyan-500">85%</span>
                         </div>
                         <div
@@ -946,7 +1012,6 @@
                             data-mm="နောက်ဆုံးရ သုတေသနနှင့် နည်းပညာ သတင်းများ။">Latest
                             breakthroughs from my research lab.</p>
                     </div>
-                    <!-- CHANGED: Brighter/More Visible Buttons -->
                     <div class="flex gap-3">
                         <button id="news-prev"
                             class="ios-glass-btn w-10 h-10 rounded-full bg-white/10 border-white/20 hover:bg-white/20 hover:border-white/40"><i
@@ -987,7 +1052,7 @@
                                 <a
                                     href="https://storage2.me-qr.com/pdf/9921b7d3-a0a8-477c-8b71-6eb9dac9e21c.pdf"
                                     class="ios-glass-btn w-full py-3.5 text-[9px] font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 hover:border-blue-500"
-                                    target="_blank">Read
+                                    target="_blank" data-en="Read Full Article" data-mm="ဆောင်းပါးအပြည့်အစုံဖတ်ရန်">Read
                                     Full Article</a>
                             </div>
                         </div>
@@ -1016,7 +1081,7 @@
                                 <a
                                     href="https://storage2.me-qr.com/pdf/1fb75d60-aa68-4d28-bd3b-161540f382d1.pdf"
                                     class="ios-glass-btn w-full py-3.5 text-[9px] font-bold uppercase tracking-widest rounded-xl hover:bg-purple-600 hover:border-purple-500"
-                                    target="_blank">Read
+                                    target="_blank" data-en="Read Full Article" data-mm="ဆောင်းပါးအပြည့်အစုံဖတ်ရန်">Read
                                     Full Article</a>
                             </div>
                         </div>
@@ -1045,11 +1110,11 @@
                                 <a
                                     href="https://storage2.me-qr.com/pdf/fb37eb1b-6038-49e7-bb3a-7707338831d6.pdf"
                                     class="ios-glass-btn w-full py-3.5 text-[9px] font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 hover:border-blue-500"
-                                    target="_blank">Read
+                                    target="_blank" data-en="Read Full Article" data-mm="ဆောင်းပါးအပြည့်အစုံဖတ်ရန်">Read
                                     Full Article</a>
                             </div>
                         </div>
-                        <!-- News 3 -->
+                        <!-- News 4 -->
                         <div
                             class="news-card glass-card group flex flex-col w-[85vw] md:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
                             <div class="p-6 md:p-8 space-y-4 flex-grow">
@@ -1077,7 +1142,7 @@
                                 <a
                                     href="https://www.ibm.com/think/topics/machine-learning"
                                     class="ios-glass-btn w-full py-3.5 text-[9px] font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 hover:border-blue-500"
-                                    target="_blank">Read
+                                    target="_blank" data-en="Read Full Article" data-mm="ဆောင်းပါးအပြည့်အစုံဖတ်ရန်">Read
                                     Full Article</a>
                             </div>
                         </div>
@@ -1086,83 +1151,114 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer
-            class="py-20 md:py-32 px-4 md:px-6 border-t border-white/5 relative overflow-hidden bg-[#020202]">
-            <div
-                class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16">
-                <div class="md:col-span-2 space-y-8">
-                    <div class="text-3xl font-bold tracking-tight">HZP<span
-                            class="text-blue-600">.</span></div>
-                    <p
-                        class="text-gray-500 leading-relaxed text-base max-w-md font-medium"
-                        data-en="Innovating from Yangon. Bridging technology and humanity through AI and Secure Architecture."
-                        data-mm="ရန်ကုန်မြို့မှနေ၍ AI နှင့် လုံခြုံရေးဗိသုကာပညာများဖြင့် နည်းပညာနှင့် လူသားများအကြား ပေါင်းကူးပေးလျက်ရှိသည်။">Innovating
-                        from Yangon. Bridging technology and humanity through AI
-                        and Secure Architecture.</p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="https://github.com/hzp4softwareengineering"
-                            target="_blank"
-                            class="btn-crystal w-12 h-12 rounded-xl flex items-center justify-center glass-card hover:bg-[#c90076] hover:border-transparent text-gray-400 hover:text-white">
+        <!-- Integrated Contact & Footer Section -->
+        <footer id="contact-form" class="relative pt-24 pb-12 px-4 md:px-8 border-t border-white/5 bg-[#020202] overflow-hidden">
+            <!-- Background Elements -->
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+            <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-20 relative z-10">
+                <!-- Left Column: Branding & Contact Info -->
+                <div class="space-y-10">
+                    <div class="space-y-6">
+                        <h2 class="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+                            <span data-en="Let's" data-mm="အတူ">Let's</span> <span class="text-blue-500" data-en="Collaborate" data-mm="ပူးပေါင်းဆောင်ရွက်">Collaborate</span><br>
+                            <span class="text-white/30" data-en="The Future." data-mm="အနာဂတ်အတွက်">The Future.</span>
+                        </h2>
+                        <p class="text-gray-400 text-lg leading-relaxed max-w-md font-medium"
+                           data-en="Have an innovative idea or a project in mind? Send me a message directly and let's build the future together." 
+                           data-mm="ဆန်းသစ်သော စိတ်ကူးများ၊ စီမံကိန်းများရှိပါသလား။ စာပို့၍ ဆွေးနွေးတိုင်ပင်နိုင်ပါသည်။">
+                            Have an innovative idea or a project in mind? Send me a message directly and let's build the future together.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-6 pt-4">
+                        <a href="tel:+959456751882" class="flex items-center gap-5 group">
+                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-blue-500/20 group-hover:border-blue-500/50 transition-all duration-300">
+                                <i data-lucide="phone" class="w-5 h-5 text-gray-400 group-hover:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-en="Call Me" data-mm="ဖုန်းခေါ်ဆိုရန်">Call Me</p>
+                                <p class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">+95 9456751882</p>
+                            </div>
+                        </a>
+                        
+                        <a href="mailto:hzp.4aibotresearch@gmail.com" class="flex items-center gap-5 group">
+                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-purple-500/20 group-hover:border-purple-500/50 transition-all duration-300">
+                                <i data-lucide="mail" class="w-5 h-5 text-gray-400 group-hover:text-purple-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-en="Email Me" data-mm="အီးမေးလ်ပို့ရန်">Email Me</p>
+                                <p class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">hzp.4aibotresearch@gmail.com</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="flex flex-wrap gap-3 pt-4">
+                        <a href="https://github.com/hzp4softwareengineering" target="_blank"
+                            class="w-12 h-12 rounded-2xl flex items-center justify-center glass-card hover:bg-[#c90076] hover:border-[#c90076] text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1">
                             <i data-lucide="github" class="w-5 h-5"></i>
                         </a>
-                        <a href="www.linkedin.com/in/htet-zaw-paing-a768533a8"
-                            target="_blank"
-                            class="btn-crystal w-12 h-12 rounded-xl flex items-center justify-center glass-card hover:bg-[#0077b5] hover:border-transparent text-gray-400 hover:text-white">
-                            <svg class="w-5 h-5 fill-current"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M20.447 20.452h-3.554v-5.569c0-1.327-.024-3.037-1.849-3.037-1.851 0-2.135 1.445-2.135 2.939v5.667H9.358V9h3.414v1.561h.049c.476-.9 1.637-1.848 3.372-1.848 3.605 0 4.271 2.373 4.271 5.456v6.283zM5.337 7.433c-1.144 0-2.07-.926-2.07-2.07 0-1.143.926-2.07 2.07-2.07 1.143 0 2.07.927 2.07 2.07 0 1.144-.927 2.07-2.07 2.07zM6.632 20.452H4.041V9h2.591v11.452z" />
-                            </svg>
+                        <a href="www.linkedin.com/in/htet-zaw-paing-a768533a8" target="_blank"
+                            class="w-12 h-12 rounded-2xl flex items-center justify-center glass-card hover:bg-[#0077b5] hover:border-[#0077b5] text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.327-.024-3.037-1.849-3.037-1.851 0-2.135 1.445-2.135 2.939v5.667H9.358V9h3.414v1.561h.049c.476-.9 1.637-1.848 3.372-1.848 3.605 0 4.271 2.373 4.271 5.456v6.283zM5.337 7.433c-1.144 0-2.07-.926-2.07-2.07 0-1.143.926-2.07 2.07-2.07 1.143 0 2.07.927 2.07 2.07 0 1.144-.927 2.07-2.07 2.07zM6.632 20.452H4.041V9h2.591v11.452z"/></svg>
                         </a>
-                        <a href="https://discord.com/users/1110430133707341894"
-                            target="_blank"
-                            class="btn-crystal w-12 h-12 rounded-xl flex items-center justify-center glass-card hover:bg-[#5865F2] hover:border-transparent text-gray-400 hover:text-white">
-                            <svg class="w-5 h-5 fill-current"
-                                viewBox="0 0 24 24"><path
-                                    d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01a13.928 13.928 0 0 0 10.36 0a.07.07 0 0 1 .077.01c.124.097.248.196.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" /></svg>
+                        <a href="https://discord.com/users/1110430133707341894" target="_blank"
+                            class="w-12 h-12 rounded-2xl flex items-center justify-center glass-card hover:bg-[#5865F2] hover:border-[#5865F2] text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01a13.928 13.928 0 0 0 10.36 0a.07.07 0 0 1 .077.01c.124.097.248.196.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/></svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="space-y-8">
-                    <h4
-                        class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500"
-                        data-en="Contact" data-mm="ဆက်သွယ်ရန်">Contact</h4>
-                    <ul class="space-y-6">
-                        <li
-                            class="flex items-center gap-4 group cursor-pointer">
-                            <div
-                                class="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-500"><i
-                                    data-lucide="phone"
-                                    class="w-4 h-4"></i></div>
-                            <span class="font-semibold text-sm">+95
-                                9456751882</span>
-                        </li>
-                        <li
-                            class="flex items-center gap-4 group cursor-pointer">
-                            <div
-                                class="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-500"><i
-                                    data-lucide="mail"
-                                    class="w-4 h-4"></i></div>
-                            <span
-                                class="font-semibold text-sm break-all">hzp.4aibotresearch@gmail.com</span>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Right Column: Contact Form -->
+                <div class="glass-card p-8 md:p-10 bg-white/[0.02] border border-white/10 rounded-3xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
+                    
+                    <form id="direct-email-form" class="space-y-5 relative z-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Name" data-mm="အမည်">Name</label>
+                                <input type="text" id="contact-name" class="w-full px-5 py-4 input-crystal text-sm bg-black/20" placeholder="Your Name" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Email" data-mm="အီးမေးလ်">Email</label>
+                                <input type="email" id="contact-email" class="w-full px-5 py-4 input-crystal text-sm bg-black/20" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Subject" data-mm="အကြောင်းအရာ">Subject</label>
+                            <input type="text" id="contact-subject" class="w-full px-5 py-4 input-crystal text-sm bg-black/20" placeholder="Project Inquiry / Collaboration" required>
+                        </div>
 
-                <div class="md:text-right flex flex-col justify-end space-y-6">
-                    <p
-                        class="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-500">&copy;
-                        2026 HTET ZAW PAING. All Rights Reserved.</p>
-                    <div
-                        class="inline-flex glass-card px-4 py-1.5 rounded-full md:ml-auto items-center gap-2 w-fit bg-white/[0.03]">
-                        <span
-                            class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
-                        <span
-                            class="text-[8px] font-bold uppercase tracking-widest text-gray-400">Secure
-                            Node Online</span>
-                    </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Message" data-mm="စာသား">Message</label>
+                            <textarea id="contact-message" rows="4" class="w-full px-5 py-4 input-crystal text-sm resize-none bg-black/20" placeholder="Tell me about your project details..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-blue-600 rounded-2xl font-bold text-xs uppercase tracking-[0.15em] shadow-lg shadow-blue-500/20 text-center hover:bg-blue-500 text-white transition-all transform hover:-translate-y-1">
+                            <span data-en="Send Message" data-mm="စာပို့ရန်">Send Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bottom Bar: Copyright & Status -->
+            <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                    <span class="text-xl font-bold tracking-tight text-white">HZP<span class="text-blue-600">.</span></span>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">
+                        &copy; 2026 Htet Zaw Paing. <span data-en="All Rights Reserved." data-mm="မူပိုင်ခွင့်များ ရယူထားပြီး။">All Rights Reserved.</span>
+                    </p>
+                </div>
+                
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/5">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400" data-en="Secure Node Online" data-mm="လုံခြုံသော စနစ် အွန်လိုင်း">Secure Node Online</span>
                 </div>
             </div>
         </footer>
@@ -1185,8 +1281,8 @@
                 const text = el.getAttribute(`data-${lang}`);
                 if (text) el.innerText = text;
             });
-            langText.innerText = lang.toUpperCase();
-            mobileLangText.innerText = lang.toUpperCase();
+            if(langText) langText.innerText = lang.toUpperCase();
+            if(mobileLangText) mobileLangText.innerText = lang.toUpperCase();
         }
 
         const toggleLang = () => {
@@ -1227,16 +1323,32 @@
 
         navLinks.forEach(link => {
             link.addEventListener('mouseenter', (e) => {
+                // If it's a dropdown link, don't move the main pill
+                if(e.target.classList.contains('dropdown-item')) return;
+                
                 const rect = e.target.getBoundingClientRect();
-                const containerRect = e.target.parentElement.getBoundingClientRect();
-                pill.style.width = `${rect.width}px`;
-                pill.style.height = `${rect.height}px`;
-                pill.style.left = `${rect.left - containerRect.left}px`;
-                pill.style.top = `${rect.top - containerRect.top}px`;
-                pill.style.opacity = '1';
+                
+                // Fixed: Use the pill's own positioned container for relative calculations.
+                const container = pill.offsetParent || pill.parentElement;
+                
+                if (container) {
+                    const containerRect = container.getBoundingClientRect();
+                    
+                    pill.style.width = `${rect.width}px`;
+                    pill.style.height = `${rect.height}px`;
+                    // Calculate left/top relative to the inner nav container, not the whole header
+                    pill.style.left = `${rect.left - containerRect.left}px`;
+                    pill.style.top = `${rect.top - containerRect.top}px`;
+                    pill.style.opacity = '1';
+                }
             });
-            link.addEventListener('mouseleave', () => pill.style.opacity = '0');
         });
+        
+        // Hide pill when leaving the nav container
+        document.querySelector('.crystal-water-header').addEventListener('mouseleave', () => {
+             pill.style.opacity = '0';
+        });
+
 
         // Mouse Spotlight for Cards
         document.querySelectorAll('.glass-card').forEach(card => {
@@ -1331,6 +1443,27 @@
         });
 
         setTimeout(updateCarousel, 100);
+
+        // Contact Form Logic (Real Mailto Generation)
+        const contactForm = document.getElementById('direct-email-form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const subject = document.getElementById('contact-subject').value;
+                const message = document.getElementById('contact-message').value;
+                
+                const fullBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+                
+                // Construct the mailto link
+                const mailtoLink = `mailto:hzp.4aibotresearch@gmail.com?subject=${encodeURIComponent(subject)}&body=${fullBody}`;
+                
+                // Open default mail client
+                window.location.href = mailtoLink;
+            });
+        }
     </script>
     </body>
 </html>
