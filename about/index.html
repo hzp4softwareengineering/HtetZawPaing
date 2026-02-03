@@ -31,10 +31,10 @@
         <meta name="twitter:image" content="https://www.htetzawpaing.site/favicon.jpg">
 
         <!-- 5. Favicon & Canonical -->
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?v2026">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v2026">
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png?v2026">
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v2026">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?v=2026">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2026">
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png?v=2026">
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=2026">
         <!-- Canonical points to directory index style for clean SEO -->
         <link rel="canonical" href="https://www.htetzawpaing.site/about/">
 
@@ -206,6 +206,30 @@
             text-align: center;
         }
         .dropdown-item:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+        /* Card Stack Styles */
+        .stack-card {
+            position: absolute;
+            inset: 0;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: #050505;
+            cursor: pointer;
+            /* Improved touch action for swipe */
+            touch-action: pan-y; 
+        }
+        .stack-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        .stack-card:hover img {
+            transform: scale(1.05);
+        }
         </style>
     </head>
     <body>
@@ -321,7 +345,7 @@
         </nav>
 
         <!-- Hero Section -->
-        <section class="min-h-[80vh] flex items-center justify-center px-4 relative pt-20">
+        <section class="min-h-[80vh] flex items-center justify-center px-4 relative pt-20 overflow-hidden">
             <div class="hero-aurora"></div>
             
             <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -334,7 +358,7 @@
 
                     <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.1]">
                         <span data-en="Behind" data-mm="ကုဒ်များ၏">Behind</span> <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-500" data-en="The Code." data-mm="နောက်ကွယ်။">The Code.</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-blue-500" data-en="The Code." data-mm="နောက်ကွယ်။">The Code.</span>
                     </h1>
 
                     <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-lg">
@@ -352,20 +376,64 @@
                     </div>
                 </div>
 
-                <!-- Visual -->
+                <!-- Visual: Shuffling Stack -->
                 <div class="order-1 lg:order-2 relative flex justify-center">
-                    <div class="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px]">
-                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-[60px]"></div>
-                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-[60px]"></div>
+                    <!-- Glows -->
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-[60px] pointer-events-none"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-[60px] pointer-events-none"></div>
+
+                    <div class="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px]" id="card-stack" onmouseenter="pauseShuffle()" onmouseleave="resumeShuffle()" onclick="forceShuffle()">
                         
-                        <div class="absolute inset-0 glass-card rounded-[40px] border border-white/10 overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-700">
-                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                        <!-- Card 1: Name -->
+                        <div class="stack-card z-50">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
                              <img src="../favicon.jpg" alt="Htet Zaw Paing" class="w-full h-full object-cover">
                              <div class="absolute bottom-8 left-8 z-20">
-                                 <h3 class="text-2xl font-bold text-white">Htet Zaw Paing</h3>
-                                 <p class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-1" data-en="Yangon, Myanmar" data-mm="ရန်ကုန်၊ မြန်မာ">Yangon, Myanmar</p>
+                                 <p class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-1">Identity</p>
+                                 <h3 class="text-2xl md:text-3xl font-bold text-white">Htet Zaw Paing</h3>
                              </div>
                         </div>
+
+                        <!-- Card 2: Date of Birth -->
+                        <div class="stack-card z-40 transform scale-95 translate-y-2 opacity-80">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
+                             <img src="../favicon.jpg" alt="Date of Birth" class="w-full h-full object-cover grayscale">
+                             <div class="absolute bottom-8 left-8 z-20">
+                                 <p class="text-purple-400 text-[10px] font-bold uppercase tracking-widest mb-1">Date of Birth</p>
+                                 <h3 class="text-2xl md:text-3xl font-bold text-white" data-en="April 10, 2004" data-mm="ဧပြီလ ၁၀၊ ၂၀၀၄">April 10, 2004</h3>
+                             </div>
+                        </div>
+
+                        <!-- Card 3: Location -->
+                        <div class="stack-card z-30 transform scale-90 translate-y-4 opacity-60">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
+                             <img src="../favicon.jpg" alt="Location" class="w-full h-full object-cover">
+                             <div class="absolute bottom-8 left-8 z-20">
+                                 <p class="text-green-400 text-[10px] font-bold uppercase tracking-widest mb-1">Location</p>
+                                 <h3 class="text-2xl md:text-3xl font-bold text-white" data-en="Yangon, Myanmar" data-mm="ရန်ကုန်၊ မြန်မာ">Yangon, Myanmar</h3>
+                             </div>
+                        </div>
+
+                        <!-- Card 4: University -->
+                        <div class="stack-card z-20 transform scale-85 translate-y-6 opacity-40">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
+                             <img src="../favicon.jpg" alt="University" class="w-full h-full object-cover grayscale">
+                             <div class="absolute bottom-8 left-8 z-20">
+                                 <p class="text-yellow-400 text-[10px] font-bold uppercase tracking-widest mb-1">Education</p>
+                                 <h3 class="text-xl md:text-2xl font-bold text-white">Edinburgh Napier Univ</h3>
+                             </div>
+                        </div>
+
+                        <!-- Card 5: Role -->
+                        <div class="stack-card z-10 transform scale-80 translate-y-8 opacity-20">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
+                             <img src="../favicon.jpg" alt="Role" class="w-full h-full object-cover">
+                             <div class="absolute bottom-8 left-8 z-20">
+                                 <p class="text-red-400 text-[10px] font-bold uppercase tracking-widest mb-1">Profession</p>
+                                 <h3 class="text-2xl md:text-3xl font-bold text-white">Software Engineer</h3>
+                             </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -386,7 +454,27 @@
                                 <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1" data-en="Full Name" data-mm="အမည်အပြည့်အစုံ">Full Name</p><p class="text-white font-medium text-lg">Htet Zaw Paing</p></div>
                                 <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1" data-en="Born" data-mm="မွေးနေ့">Born</p><p class="text-white font-medium text-lg" data-en="April 10, 2004" data-mm="ဧပြီလ ၁၀၊ ၂၀၀၄">April 10, 2004</p></div>
                                 <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1" data-en="Base of Operations" data-mm="နေရပ်">Base of Operations</p><p class="text-white font-medium text-lg" data-en="Yangon, Myanmar" data-mm="ရန်ကုန်၊ မြန်မာ">Yangon, Myanmar</p></div>
-                                <div>
+                                
+                                <!-- Family Details Added Here -->
+                                <div class="pt-4 border-t border-white/5">
+                                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2" data-en="Family" data-mm="မိသားစု">Family</p>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <span class="text-xs text-blue-400 font-semibold uppercase tracking-wider block mb-0.5" data-en="Father" data-mm="ဖခင်">Father</span>
+                                            <span class="text-white font-medium">U Myo Zaw</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-xs text-purple-400 font-semibold uppercase tracking-wider block mb-0.5" data-en="Mother" data-mm="မိခင်">Mother</span>
+                                            <span class="text-white font-medium">Daw Nilar Aung</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-xs text-green-400 font-semibold uppercase tracking-wider block mb-0.5" data-en="Brother" data-mm="မောင်">Brother</span>
+                                            <span class="text-white font-medium">Mg Aung Zaw Paing</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 border-t border-white/5">
                                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1" data-en="Status" data-mm="အခြေအနေ">Status</p>
                                     <div class="inline-flex items-center gap-2 mt-1 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
                                         <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
@@ -610,13 +698,13 @@
                             </div>
                         </a>
                         
-                        <a href="mailto:.4aibotresearch@gmail.com" class="flex items-center gap-5 group">
+                        <a href="mailto:hzp.4aibotresearch@gmail.com" class="flex items-center gap-5 group">
                             <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-purple-500/20 group-hover:border-purple-500/50 transition-all duration-300">
                                 <i data-lucide="mail" class="w-5 h-5 text-gray-400 group-hover:text-purple-400"></i>
                             </div>
                             <div>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-en="Email Me" data-mm="အီးမေးလ်ပို့ရန်">Email Me</p>
-                                <p class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">.4aibotresearch@gmail.com</p>
+                                <p class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">hzp.4aibotresearch@gmail.com</p>
                             </div>
                         </a>
                     </div>
@@ -626,35 +714,6 @@
                         <a href="www.linkedin.com/in/htet-zaw-paing-a768533a8" target="_blank" class="w-12 h-12 rounded-2xl flex items-center justify-center glass-card hover:bg-[#0077b5] hover:border-[#0077b5] text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.327-.024-3.037-1.849-3.037-1.851 0-2.135 1.445-2.135 2.939v5.667H9.358V9h3.414v1.561h.049c.476-.9 1.637-1.848 3.372-1.848 3.605 0 4.271 2.373 4.271 5.456v6.283zM5.337 7.433c-1.144 0-2.07-.926-2.07-2.07 0-1.143.926-2.07 2.07-2.07 1.143 0 2.07.927 2.07 2.07 0 1.144-.927 2.07-2.07 2.07zM6.632 20.452H4.041V9h2.591v11.452z"/></svg></a>
                         <a href="https://discord.com/users/1110430133707341894" target="_blank" class="w-12 h-12 rounded-2xl flex items-center justify-center glass-card hover:bg-[#5865F2] hover:border-[#5865F2] text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01a13.928 13.928 0 0 0 10.36 0a.07.07 0 0 1 .077.01c.124.097.248.196.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
                     </div>
-                </div>
-
-                <!-- Right Column: Contact Form -->
-                <div class="glass-card p-8 md:p-10 bg-white/[0.02] border border-white/10 rounded-3xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
-                    
-                    <form id="direct-email-form" class="space-y-5 relative z-10">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Name" data-mm="အမည်">Name</label>
-                                <input type="text" id="contact-name" class="w-full px-5 py-4 input-crystal text-sm bg-black/20" placeholder="Your Name" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Email" data-mm="အီးမေးလ်">Email</label>
-                                <input type="email" id="contact-email" class="w-full px-5 py-4 input-crystal text-sm bg-black/20" placeholder="your@email.com" required>
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Subject" data-mm="အကြောင်းအရာ">Subject</label>
-                            <input type="text" id="contact-subject" class="w-full px-5 py-4 input-crystal text-sm bg-black/20" placeholder="Project Inquiry / Collaboration" required>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 ml-1" data-en="Message" data-mm="စာသား">Message</label>
-                            <textarea id="contact-message" rows="4" class="w-full px-5 py-4 input-crystal text-sm resize-none bg-black/20" placeholder="Tell me about your project details..." required></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-4 bg-blue-600 rounded-2xl font-bold text-xs uppercase tracking-[0.15em] shadow-lg shadow-blue-500/20 text-center hover:bg-blue-500 text-white transition-all transform hover:-translate-y-1">
-                            <span data-en="Send Message" data-mm="စာပို့ရန်">Send Message</span>
-                        </button>
-                    </form>
                 </div>
             </div>
 
@@ -753,6 +812,122 @@
                 window.location.href = mailtoLink;
             });
         }
+
+        /* -----------------------
+           SHUFFLE CARD STACK LOGIC
+           ----------------------- */
+        const stack = document.getElementById('card-stack');
+        // Get only element nodes (divs with stack-card class)
+        const cards = Array.from(stack.children).filter(c => c.classList.contains('stack-card'));
+        let activeIndex = 0;
+        let shuffleInterval;
+        let isPaused = false;
+
+        function updateCards() {
+            // Adjust offset for mobile vs desktop
+            const offset = window.innerWidth < 768 ? 25 : 35;
+            
+            cards.forEach((card, index) => {
+                // Calculate position relative to activeIndex
+                // This logic creates a cyclic buffer index: 0 is top, 1 is second, etc.
+                let pos = (index - activeIndex + cards.length) % cards.length;
+                
+                // Style based on position in stack
+                card.style.zIndex = 50 - pos * 10;
+                
+                // Transform calculation
+                // Top card (pos 0): scale 1, y 0
+                // Back cards: scale down, move down slightly
+                let scale = 1 - pos * 0.05; 
+                let translateY = pos * offset; // Increased for "slice" look
+                let opacity = 1 - pos * 0.1; // Clearer visibility for back cards
+
+                // Reset filter for all then apply to back cards
+                card.style.filter = pos === 0 ? 'brightness(1)' : 'brightness(0.6)';
+                
+                card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+                card.style.opacity = opacity;
+            });
+        }
+
+        function cycleStack() {
+            if(!isPaused) {
+                activeIndex = (activeIndex + 1) % cards.length;
+                updateCards();
+            }
+        }
+
+        function startShuffle() {
+            // Clear existing if any to avoid double intervals
+            if (shuffleInterval) clearInterval(shuffleInterval);
+            shuffleInterval = setInterval(cycleStack, 3000); // 3 seconds
+        }
+
+        function pauseShuffle() {
+            isPaused = true;
+            // Optional: fan out slightly on hover
+            const offset = window.innerWidth < 768 ? 35 : 45; // Fan out more on hover
+            cards.forEach((card, index) => {
+                let pos = (index - activeIndex + cards.length) % cards.length;
+                let scale = 1 - pos * 0.02; // less scaling diff
+                let translateY = pos * offset; 
+                card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+            });
+        }
+
+        function resumeShuffle() {
+            isPaused = false;
+            updateCards(); // Snap back to standard stack
+        }
+
+        function forceShuffle() {
+            // Manual trigger logic (always advances even if paused)
+            activeIndex = (activeIndex + 1) % cards.length;
+            updateCards();
+            resetTimer();
+        }
+        
+        function resetTimer() {
+             if (shuffleInterval) clearInterval(shuffleInterval);
+             shuffleInterval = setInterval(cycleStack, 3000);
+        }
+
+        /* -----------------------
+           SWIPE LOGIC
+           ----------------------- */
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        stack.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            pauseShuffle(); // Pause while interacting
+        }, {passive: true});
+
+        stack.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            resumeShuffle();
+        }, {passive: true});
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 30) {
+                // Swiped Left -> Next
+                forceShuffle(); 
+            } else if (touchEndX > touchStartX + 30) {
+                // Swiped Right -> Prev
+                activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+                updateCards();
+                resetTimer();
+            }
+        }
+
+        // Init
+        updateCards();
+        startShuffle();
+        
+        // Handle resize to adjust offsets
+        window.addEventListener('resize', updateCards);
+
         </script>
     </body>
 </html>
