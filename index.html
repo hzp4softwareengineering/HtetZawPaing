@@ -2,7 +2,7 @@
 <html lang="en">
     <!-- 1. Technical Meta Tags -->
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="theme-color" content="#050505">
 
@@ -109,7 +109,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
             rel="stylesheet">
         <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -119,18 +119,22 @@
             --accent-blue: #0A84FF;
             --accent-purple: #5E5CE6;
             --glass-border: rgba(255, 255, 255, 0.053);
-            --ease-fluid: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+            /* Updated easing for more formal, slower motion */
+            --ease-fluid: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-material: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-dark);
             color: #ffffff;
+            width: 100%;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Subtle Grain */
@@ -139,10 +143,156 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.03;
+            opacity: 0.01;
             pointer-events: none;
             z-index: 9999;
             mix-blend-mode: overlay;
+        }
+
+        /* Planet Background */
+        .planet-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+            filter: saturate(1.4) contrast(1.2);
+        }
+
+        /* Responsive Image Reset */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Space Decoration Base Styles - Now Responsive */
+        .space-deco {
+            position: absolute;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0; /* Hidden initially for animation */
+            background-repeat: no-repeat;
+            background-size: contain;
+            mix-blend-mode: screen;
+            filter: saturate(120%);
+            
+            /* Responsive Widths */
+            width: 80vw;
+            height: 80vw;
+            max-width: 800px;
+            max-height: 800px;
+
+            /* Enhanced Animation Settings: Slower duration and delay */
+            transition: opacity 2s ease-out, transform 2s var(--ease-fluid); 
+            transition-delay: 0.2s; /* Subtle wait for space items */
+            will-change: transform, opacity;
+        }
+
+        /* Nebula: Scale up and Fade In */
+        .deco-right-nebula {
+            top: 10%;
+            right: -10%;
+            background-image: url('https://cdn.esawebb.org/archives/images/screen/weic2326a.jpg');
+            mask-image: radial-gradient(closest-side, black 20%, transparent 100%);
+            -webkit-mask-image: radial-gradient(closest-side, black 20%, transparent 100%);
+            /* Dramatically increased movement */
+            transform: scale(0.6) translate(150px, -150px);
+        }
+
+        /* Planet: Rotate In from Left */
+        .deco-left-planet {
+            top: 20%;
+            left: -5%;
+            width: 70vw; height: 70vw; max-width: 700px; max-height: 700px;
+            background-image: url('https://images.pexels.com/photos/4994815/pexels-photo-4994815.jpeg');
+            mask-image: radial-gradient(circle, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
+            /* Dramatically increased movement */
+            transform: rotate(-120deg) translateX(-300px) scale(0.6);
+        }
+
+        /* Galaxy: Slow Spin + Fade Up */
+        .deco-right-galaxy {
+            bottom: -10%;
+            right: -10%;
+            width: 90vw; height: 90vw; max-width: 900px; max-height: 900px;
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2074&auto=format&fit=crop');
+            mask-image: radial-gradient(closest-side, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(closest-side, black 30%, transparent 80%);
+            /* Dramatically increased movement */
+            transform: rotate(180deg) scale(0.5);
+        }
+
+        /* Asteroid: Slide In Horizontal */
+        .deco-left-asteroid {
+            top: 5%; /* Adjusted for visibility */
+            left: -5%; /* Move slightly onscreen */
+            background-image: url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=2074&auto=format&fit=crop');
+            mask-image: radial-gradient(closest-side, black 20%, transparent 100%);
+            -webkit-mask-image: radial-gradient(closest-side, black 20%, transparent 100%);
+            filter: hue-rotate(20deg);
+            /* Reduced displacement so it stays within viewport bounds to trigger */
+            transform: translateX(-100px) scale(0.6); 
+        }
+
+        /* Stars: Subtle Rise */
+        .deco-right-stars {
+            right: 25%;
+            background-image: url('https://cdn.esahubble.org/archives/images/wallpaper2/heic1509a.jpg');
+            mask-image: radial-gradient(closest-side, black 20%, transparent 100%);
+            -webkit-mask-image: radial-gradient(closest-side, black 20%, transparent 100%);
+            filter: hue-rotate(20deg);
+            /* Dramatically increased movement */
+            transform: translateY(200px) scale(1.2);
+        }
+
+        /* Trigger State for Space Decos */
+        .space-deco.active-deco {
+            opacity: 0.25 !important; /* The target opacity */
+            transform: translate(0, 0) rotate(0) scale(1) !important;
+        }
+        .deco-right-galaxy.active-deco {
+            opacity: 0.12 !important; /* Galaxy is naturally more subtle */
+            transform: translate(0, 0) rotate(0) scale(1) !important;
+        }
+
+        /* Responsive adjustments for decorations */
+        @media (max-width: 768px) {
+            .space-deco {
+                transform: scale(0.6); /* Smaller start scale on mobile */
+                opacity: 0;
+            }
+            .space-deco.active-deco {
+                transform: scale(0.6) translate(0, 0) rotate(0) !important; /* Keep mobile scale when active */
+                opacity: 0.2 !important;
+            }
+        }
+        
+        /* Watch Size Optimization */
+        @media (max-width: 380px) {
+            .space-deco { opacity: 0.1 !important; display: none; } /* Hide heavy graphics on watches to prevent clutter */
+            .hero-title { font-size: 2.5rem !important; }
+            .section-title { font-size: 1.75rem !important; }
+            .glass-card { border-radius: 20px !important; }
+            .nav-link { padding: 4px 8px; font-size: 0.7rem; }
+        }
+
+        /* GENERAL SCROLL ANIMATIONS */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(50px); 
+            transition: opacity 1.4s var(--ease-fluid), transform 1.4s var(--ease-fluid);
+            transition-delay: 0.4s;
+            will-change: opacity, transform; 
+        }
+        
+        .reveal-text.active-text {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .hero-aurora {
@@ -205,8 +355,6 @@
         /* Deep Liquid Glass Material */
         .glass-refractive {
             background: rgba(20, 20, 20, 0.4);
-            backdrop-filter: blur(50px) saturate(180%);
-            -webkit-backdrop-filter: blur(50px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
         }
@@ -214,21 +362,25 @@
         /* Crystal Clear Water Header */
         .crystal-water-header {
             background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(25px) saturate(250%);
-            -webkit-backdrop-filter: blur(25px) saturate(250%);
+            /* Keep header blur as it aids navigation readability, but reduced */
+            backdrop-filter: blur(15px) saturate(150%);
+            -webkit-backdrop-filter: blur(15px) saturate(150%);
             border: 1px solid rgba(255, 255, 255, 0.35);
             box-shadow: 
                 0 15px 40px -10px rgba(0, 0, 0, 0.4),
                 inset 0 4px 20px rgba(255, 255, 255, 0.2);
             animation: liquid-stretch-bounce 1.4s var(--ease-fluid) forwards;
             transform-origin: center top;
+            max-width: 95vw; 
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @keyframes liquid-stretch-bounce {
-            0% { opacity: 0; transform: translateY(-150%) scaleX(0.4); }
-            40% { opacity: 1; transform: translateY(0) scaleX(1.15); }
-            60% { transform: scaleX(0.92); }
-            80% { transform: scaleX(1.03); }
+            0% { opacity: 0; transform: translateY(-150%) scaleX(0.9); }
+            40% { opacity: 1; transform: translateY(0) scaleX(1.0); }
+            60% { transform: scaleX(0.96); }
+            80% { transform: scaleX(0.99); }
             100% { transform: scaleX(1); }
         }
 
@@ -238,16 +390,31 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* Professional Card Logic */
         .glass-card {
             position: relative;
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(40px) saturate(160%);
-            -webkit-backdrop-filter: blur(40px) saturate(160%);
-            border: 1px solid var(--glass-border);
+            
+            /* Fixed Static Glass State */
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            
             border-radius: 32px;
-            transition: transform 0.6s var(--ease-fluid), box-shadow 0.6s var(--ease-fluid), border-color 0.4s ease;
             overflow: hidden;
+            
+            /* Hardware acceleration */
+            transform: translateZ(0); 
+            will-change: transform;
+
+            transition: 
+                transform 0.4s var(--ease-fluid),
+                box-shadow 0.4s var(--ease-fluid),
+                border-color 0.4s var(--ease-fluid);
+        }
+
+        .glass-card.active-glass {
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
         }
 
         .glass-card::before {
@@ -260,16 +427,16 @@
             pointer-events: none;
         }
         
+        /* Hover Effect */
         .glass-card:hover {
             transform: translateY(-4px) scale(1.005);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
-            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+            background: rgba(255, 255, 255, 0.05); /* Slightly brighter on hover */
         }
 
         .glass-card:active {
             transform: scale(0.98);
-            transition-duration: 0.2s;
         }
 
         /* Liquid Button Physics */
@@ -294,8 +461,6 @@
         .ios-glass-btn {
             position: relative;
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: #fff;
             overflow: hidden;
@@ -353,9 +518,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(20px);
             min-width: 160px;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: rgba(10, 10, 10, 0.9); /* Opaque for readability */
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 8px;
@@ -394,6 +557,7 @@
         
         .section-title {
             letter-spacing: -0.03em;
+            word-wrap: break-word;
         }
 
         .timeline-line::before {
@@ -438,23 +602,23 @@
             style="bottom: -20%; right: -10%; background: radial-gradient(circle, rgba(94, 92, 230, 0.03) 0%, transparent 60%);"></div>
 
         <!-- Navigation -->
-        <nav class="fixed top-0 w-full z-[100] px-4 md:px-8 py-4">
+        <nav class="fixed top-0 w-full z-[100] px-2 md:px-8 py-4">
             <div
-                class="max-w-6xl mx-auto crystal-water-header px-4 py-2 flex justify-between items-center rounded-full relative z-50">
+                class="w-full max-w-6xl mx-auto crystal-water-header px-4 py-2 flex justify-between items-center rounded-full relative z-50">
                 <a href="index.html"
-                    class="text-lg font-bold tracking-tight z-10 flex items-center text-white/90">
+                    class="text-base md:text-lg font-bold tracking-tight z-10 flex items-center text-white/90">
                     <div
-                        class="w-8 h-8 rounded-full overflow-hidden mr-3 border border-white/10 shadow-lg">
+                        class="w-8 h-8 rounded-full overflow-hidden mr-3 border border-white/10 shadow-lg shrink-0">
                         <img
                             src="favicon.jpg"
                             alt="Htet Zaw Paing"
                             class="w-full h-full object-cover">
                     </div>
-                    HZP<span class="text-blue-600">.</span>
+                    <span class="whitespace-nowrap">HZP<span class="text-blue-600">.</span></span>
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex relative space-x-1 items-center text-[11px] font-semibold tracking-wide uppercase">
+                <div class="hidden xl:flex relative space-x-1 items-center text-[11px] font-semibold tracking-wide uppercase">
                     <div id="liquid-pill" class="liquid-pill"></div>
                     
                     <!-- Home with Dropdown -->
@@ -478,7 +642,7 @@
                 </div>
 
                 <!-- Desktop Actions -->
-                <div class="hidden md:flex items-center gap-3 z-10">
+                <div class="hidden xl:flex items-center gap-3 z-10">
                     <button id="lang-toggle"
                         class="btn-crystal px-4 py-2 glass-card rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-2 text-white/80 border-white/5 bg-transparent hover:bg-white/5">
                         <i data-lucide="languages"
@@ -495,7 +659,7 @@
 
                 <!-- Mobile Hamburger Button -->
                 <button id="menu-toggle"
-                    class="md:hidden z-50 p-2 text-white/80 hover:text-white transition-colors">
+                    class="xl:hidden z-50 p-2 text-white/80 hover:text-white transition-colors">
                     <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -549,12 +713,14 @@
 
         <!-- Hero Section -->
         <section id="home"
-            class="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 text-center pt-20 relative">
+            class="min-h-[100dvh] flex flex-col items-center justify-center px-4 md:px-6 text-center pt-20 relative overflow-hidden">
 
+            <!-- Deep Space Planet Background -->
+            <div class="planet-bg"></div>
             <!-- Vibrant Gradient Atmosphere -->
             <div class="hero-aurora"></div>
 
-            <div class="space-y-6 md:space-y-8 max-w-4xl relative z-10">
+            <div class="space-y-6 md:space-y-8 max-w-4xl relative z-10 w-full">
                 <div
                     class="inline-flex items-center gap-2 px-4 py-1.5 glass-card bg-white/5 border border-white/10 text-[9px] md:text-[10px] font-bold tracking-widest text-white/70 uppercase rounded-full">
                     <span class="relative flex h-1.5 w-1.5">
@@ -581,7 +747,7 @@
                 </div>
 
                 <h1
-                    class="hero-title text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1]">
+                    class="hero-title text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] break-words">
                     <span data-en="Engineering"
                         data-mm="အင်ဂျင်နီယာ"
                         class="text-white/90">Engineering</span> <br />
@@ -590,7 +756,7 @@
                 </h1>
 
                 <p
-                    class="text-sm md:text-lg text-gray-300 font-medium max-w-[90%] md:max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+                    class="text-sm md:text-lg text-gray-300 font-medium max-w-[95%] md:max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
                     <span data-en="I am" data-mm="ကျွန်တော်ကတော့">I am</span>
                     <span
                         class="text-blue-600 font-bold" data-en="Htet Zaw Paing" data-mm="ထက်ဇော်ပိုင်">Htet
@@ -624,20 +790,23 @@
         </section>
 
         <!-- Identity Profile -->
-        <section id="person" class="py-20 md:py-32 px-4 md:px-6">
+        <section id="person" class="py-20 md:py-32 px-4 md:px-6 relative overflow-hidden">
+            <!-- Space Decoration: Nebula on right -->
+            <div class="space-deco deco-right-nebula"></div>
+
             <div
-                class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
-                <div class="space-y-8 md:space-y-10">
+                class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
+                <div class="space-y-8 md:space-y-10 order-2 lg:order-1">
                     <div class="space-y-4">
                         <h2
-                            class="text-3xl md:text-5xl font-bold tracking-tight leading-none section-title"><span
+                            class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight leading-none section-title reveal-text break-words"><span
                                 data-en="Identity"
                                 data-mm="ကိုယ်ရေးကိုယ်တာ">Identity</span> <span
                                 class="text-blue-500 italic font-serif"
                                 data-en="Profile"
                                 data-mm="အချက်အလက်">Profile</span></h2>
                         <p
-                            class="text-gray-400 leading-relaxed text-base md:text-lg"
+                            class="text-gray-400 leading-relaxed text-sm md:text-lg reveal-text" style="transition-delay: 0.5s;"
                             data-en="Born April 10, 2004. Highly motivated Software Engineer focused on bridging the gap between theoretical research and industrial application."
                             data-mm="ဧပြီလ ၁၀ ရက်၊ ၂၀၀၄ တွင် မွေးဖွားခဲ့သည်။ သီအိုရီဆိုင်ရာ သုတေသနနှင့် လက်တွေ့လုပ်ငန်းသုံး အသုံးချမှုကြား ဆက်စပ်ပေးရန် အားထုတ်နေသော ဆော့ဖ်ဝဲအင်ဂျင်နီယာတစ်ဦး ဖြစ်ပါသည်။">
                             Born April 10, 2004. Highly motivated Software
@@ -646,8 +815,8 @@
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="glass-card p-6 space-y-3 bg-white/[0.02]">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-6 space-y-3 bg-white/[0.02] reveal-text" style="transition-delay: 0.6s;">
                             <div
                                 class="bg-blue-500/10 w-10 h-10 rounded-xl flex items-center justify-center text-blue-400 mb-2">
                                 <i data-lucide="map-pin" class="w-5 h-5"></i>
@@ -657,13 +826,13 @@
                                     class="text-[9px] text-gray-500 uppercase tracking-widest font-bold"
                                     data-en="Location"
                                     data-mm="နေရပ်">Location</p>
-                                <p class="text-base font-semibold text-white/90"
+                                <p class="text-sm md:text-base font-semibold text-white/90"
                                     data-en="Northokkalapa, Yangon"
                                     data-mm="မြောက်ဥက္ကလာပ၊ ရန်ကုန်">Northokkalapa,
                                     Yangon</p>
                             </div>
                         </div>
-                        <div class="glass-card p-6 space-y-3 bg-white/[0.02]">
+                        <div class="glass-card p-6 space-y-3 bg-white/[0.02] reveal-text" style="transition-delay: 0.7s;">
                             <div
                                 class="bg-purple-500/10 w-10 h-10 rounded-xl flex items-center justify-center text-purple-400 mb-2">
                                 <i data-lucide="graduation-cap"
@@ -674,7 +843,7 @@
                                     class="text-[9px] text-gray-500 uppercase tracking-widest font-bold"
                                     data-en="University"
                                     data-mm="တက္ကသိုလ်">University</p>
-                                <p class="text-base font-semibold text-white/90"
+                                <p class="text-sm md:text-base font-semibold text-white/90"
                                     data-en="Edinburgh Napier"
                                     data-mm="Edinburgh Napier">Edinburgh
                                     Napier</p>
@@ -683,13 +852,13 @@
                     </div>
                 </div>
 
-                <div class="relative">
+                <div class="relative reveal-text order-1 lg:order-2" style="transition-delay: 0.8s;">
                     <div
                         class="glass-card p-2 rounded-[32px] md:rounded-[40px] shadow-2xl bg-white/[0.01] border-white/5">
                         <div
                             class="bg-gradient-to-br from-white/[0.02] to-transparent p-6 md:p-8 rounded-[28px] text-center">
                             <div
-                                class="w-full h-[280px] md:h-[400px] rounded-[20px] overflow-hidden mb-6 border border-white/5 shadow-inner">
+                                class="w-full h-auto aspect-[4/5] md:h-[400px] rounded-[20px] overflow-hidden mb-6 border border-white/5 shadow-inner">
                                 <img
                                     src="favicon.jpg"
                                     alt="Htet Zaw Paing"
@@ -711,15 +880,18 @@
         </section>
 
         <!-- Academic Timeline -->
-        <section class="py-20 md:py-32 px-4 md:px-6">
-            <div class="max-w-4xl mx-auto">
+        <section class="py-20 md:py-32 px-4 md:px-6 relative overflow-hidden">
+            <!-- Space Decoration: Planet Curve on Left -->
+            <div class="space-deco deco-left-planet"></div>
+
+            <div class="max-w-4xl mx-auto relative z-10">
                 <h2
-                    class="text-3xl md:text-4xl font-bold mb-12 md:mb-16 tracking-tight section-title"
+                    class="text-2xl sm:text-3xl md:text-4xl font-bold mb-12 md:mb-16 tracking-tight section-title reveal-text"
                     data-en="Academic Timeline"
                     data-mm="ပညာရေး ခရီးလမ်း">Academic Timeline</h2>
                 <div class="relative timeline-line space-y-12">
                     <!-- 2026 -->
-                    <div class="relative pl-12 md:pl-16 group">
+                    <div class="relative pl-8 sm:pl-12 md:pl-16 group reveal-text" style="transition-delay: 0.5s;">
                         <div
                             class="absolute left-0 top-1 w-8 h-8 rounded-full glass-card border border-blue-500/30 flex items-center justify-center z-10 bg-[#050505]">
                             <div
@@ -730,7 +902,7 @@
                             <span
                                 class="text-blue-400 font-bold text-[10px] tracking-wider mb-2 block" data-en="CURRENT - 2026" data-mm="လက်ရှိ - ၂၀၂၆">CURRENT
                                 - 2026</span>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2">Bsc
+                            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-2">Bsc
                                 (Hons) in
                                 Computing</h3>
                             <p
@@ -743,7 +915,7 @@
                     </div>
 
                     <!-- 2024-2025 -->
-                    <div class="relative pl-12 md:pl-16 group">
+                    <div class="relative pl-8 sm:pl-12 md:pl-16 group reveal-text" style="transition-delay: 0.6s;">
                         <div
                             class="absolute left-0 top-1 w-8 h-8 rounded-full glass-card border border-purple-500/30 flex items-center justify-center z-10 bg-[#050505]">
                             <div
@@ -754,7 +926,7 @@
                             <span
                                 class="text-purple-400 font-bold text-[10px] tracking-wider mb-2 block">2024
                                 - 2025</span>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2">HND
+                            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-2">HND
                                 in
                                 Computing</h3>
                             <p
@@ -767,7 +939,7 @@
                     </div>
 
                     <!-- 2023-2024 -->
-                    <div class="relative pl-12 md:pl-16 group">
+                    <div class="relative pl-8 sm:pl-12 md:pl-16 group reveal-text" style="transition-delay: 0.7s;">
                         <div
                             class="absolute left-0 top-1 w-8 h-8 rounded-full glass-card border border-cyan-500/30 flex items-center justify-center z-10 bg-[#050505]">
                             <div
@@ -778,7 +950,7 @@
                             <span
                                 class="text-cyan-400 font-bold text-[10px] tracking-wider mb-2 block">2023
                                 - 2024</span>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2">HNC
+                            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-2">HNC
                                 in
                                 Computing</h3>
                             <p
@@ -791,7 +963,7 @@
                     </div>
 
                     <!-- 2023 -->
-                    <div class="relative pl-12 md:pl-16 group">
+                    <div class="relative pl-8 sm:pl-12 md:pl-16 group reveal-text" style="transition-delay: 0.8s;">
                         <div
                             class="absolute left-0 top-1 w-8 h-8 rounded-full glass-card border border-white/10 flex items-center justify-center z-10 bg-[#050505]">
                             <div
@@ -802,7 +974,7 @@
                             <span
                                 class="text-gray-500 font-bold text-[10px] tracking-wider mb-2 block">2023</span>
                             <h3
-                                class="text-xl md:text-2xl font-bold mb-2">Pre-University</h3>
+                                class="text-lg sm:text-xl md:text-2xl font-bold mb-2">Pre-University</h3>
                             <p
                                 class="text-gray-400 text-sm md:text-base leading-relaxed"
                                 data-en="Preparatory academic bridge for Advanced Computing Science."
@@ -816,119 +988,313 @@
         </section>
 
         <!-- Innovative Deployments -->
-        <section id="projects" class="py-20 md:py-32 px-4 md:px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="mb-12 md:mb-20">
-                    <h2
-                        class="text-4xl md:text-6xl font-black mb-4 md:mb-6 tracking-tight"><span
-                            data-en="Innovative"
-                            data-mm="ဆန်းသစ်သော">Innovative</span> <span
-                            class="text-blue-500" data-en="Deployments"
-                            data-mm="ဖန်တီးမှုများ">Deployments</span></h2>
-                    <p class="text-gray-500 text-lg md:text-xl max-w-2xl"
-                        data-en="A curation of high-impact technical architectures developed during my academic and independent research tenures."
-                        data-mm="ကျွန်ုပ်၏ ပညာရေးနှင့် သီးခြားသုတေသနကာလများအတွင်း တည်ဆောက်ခဲ့သော အဆင့်မြင့် စနစ်များ ဖြစ်ပါသည်။">A
-                        curation of high-impact technical architectures
-                        developed during my academic and independent research
-                        tenures.</p>
+        <section id="projects" class="py-20 md:py-32 px-4 md:px-6 relative overflow-hidden">
+             <!-- Space Decoration: Galaxy Spiral Bottom Right -->
+             <div class="space-deco deco-right-galaxy"></div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="flex flex-col md:flex-row justify-between md:items-end mb-12 gap-6">
+                    <div class="reveal-text">
+                        <h2
+                            class="text-3xl sm:text-4xl md:text-6xl font-black mb-4 md:mb-6 tracking-tight break-words"><span
+                                data-en="Innovative"
+                                data-mm="ဆန်းသစ်သော">Innovative</span> <span
+                                class="text-blue-500" data-en="Deployments"
+                                data-mm="ဖန်တီးမှုများ">Deployments</span></h2>
+                        <p class="text-gray-500 text-base md:text-xl max-w-2xl"
+                            data-en="A curation of high-impact technical architectures developed during my academic and independent research tenures."
+                            data-mm="ကျွန်ုပ်၏ ပညာရေးနှင့် သီးခြားသုတေသနကာလများအတွင်း တည်ဆောက်ခဲ့သော အဆင့်မြင့် စနစ်များ ဖြစ်ပါသည်။">A
+                            curation of high-impact technical architectures
+                            developed during my academic and independent research
+                            tenures.</p>
+                    </div>
+                    <!-- Navigation Buttons -->
+                    <div class="flex gap-3 self-end md:self-auto reveal-text" style="transition-delay: 0.5s;">
+                        <button id="projects-prev"
+                            class="ios-glass-btn w-10 h-10 rounded-full bg-white/10 border-white/20 hover:bg-white/20 hover:border-white/40"><i
+                                data-lucide="chevron-left"
+                                class="w-5 h-5 text-white"></i></button>
+                        <button id="projects-next"
+                            class="ios-glass-btn w-10 h-10 rounded-full bg-white/10 border-white/20 hover:bg-white/20 hover:border-white/40"><i
+                                data-lucide="chevron-right"
+                                class="w-5 h-5 text-white"></i></button>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                    <!-- Project 1: Secora -->
-                    <div class="glass-card overflow-hidden group">
-                        <div class="h-60 md:h-80 relative overflow-hidden">
-                            <img
-                                src="https://cdn.jsdelivr.net/gh/FlashChinchilla/images/secora.png"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                        </div>
-                        <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
-                            <div
-                                class="flex justify-between items-center mb-4 md:mb-6">
-                                <h3
-                                    class="text-2xl md:text-4xl font-black tracking-tight">Secora</h3>
-                                <span
-                                    class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-blue-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">E-commerce</span>
+                <!-- Projects Carousel -->
+                <div class="overflow-hidden reveal-text" style="transition-delay: 0.6s;">
+                    <div id="projects-track"
+                        class="flex gap-6 md:gap-10 transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                        <!-- Project 1: Secora -->
+                        <div class="glass-card w-full md:w-[calc(50%-1.25rem)] flex-shrink-0 overflow-hidden group">
+                            <div class="h-48 sm:h-60 md:h-80 relative overflow-hidden">
+                                <img
+                                    src="https://cdn.jsdelivr.net/gh/FlashChinchilla/images/secora.png"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                             </div>
-                            <p
-                                class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-base md:text-lg"
-                                data-en="Premium cybersecurity marketplace offering specialized hardware, software, and 24/7 elite services including penetration testing and security monitoring."
-                                data-mm="ဆော့ဖ်ဝဲနှင့် ဟာ့ဒ်ဝဲ ဆိုင်ဘာလုံခြုံရေး ပစ္စည်းများ ရောင်းချသော စနစ်ဖြစ်ပြီး Penetration Testing နှင့် Security Monitoring ဝန်ဆောင်မှုများကို ၂၄ နာရီ ပေးဆောင်ပါသည်။">Premium
-                                cybersecurity marketplace offering specialized
-                                hardware, software, and 24/7 elite services
-                                including penetration testing and security
-                                monitoring.</p>
-                            <div class="flex flex-wrap gap-3 md:gap-6">
-                                <span
-                                    class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">PHP</span>
-                                <span
-                                    class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">Node.js</span>
-                                <span
-                                    class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">MySQL</span>
+                            <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
+                                <div
+                                    class="flex justify-between items-center mb-4 md:mb-6">
+                                    <h3
+                                        class="text-xl sm:text-2xl md:text-4xl font-black tracking-tight">Secora</h3>
+                                    <span
+                                        class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-blue-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">E-commerce</span>
+                                </div>
+                                <p
+                                    class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-sm md:text-lg"
+                                    data-en="Premium cybersecurity marketplace offering specialized hardware, software, and 24/7 elite services including penetration testing and security monitoring."
+                                    data-mm="ဆော့ဖ်ဝဲနှင့် ဟာ့ဒ်ဝဲ ဆိုင်ဘာလုံခြုံရေး ပစ္စည်းများ ရောင်းချသော စနစ်ဖြစ်ပြီး Penetration Testing နှင့် Security Monitoring ဝန်ဆောင်မှုများကို ၂၄ နာရီ ပေးဆောင်ပါသည်။">Premium
+                                    cybersecurity marketplace offering specialized
+                                    hardware, software, and 24/7 elite services
+                                    including penetration testing and security
+                                    monitoring.</p>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                                    <div class="flex flex-wrap gap-3 md:gap-4">
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">PHP</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">Node.js</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">MySQL</span>
+                                    </div>
+                                    <a href="https://www.htetzawpaing.site/projects/#secora-cybersecurity-project" class="ios-glass-btn px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-600 hover:border-blue-500 whitespace-nowrap">
+                                        <span data-en="More Detailed" data-mm="အသေးစိတ်">More Detailed</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Project 2: Sensori -->
-                    <div class="glass-card overflow-hidden group">
-                        <div class="h-60 md:h-80 relative overflow-hidden">
-                            <img
-                                src="https://cdn.jsdelivr.net/gh/FlashChinchilla/images/sensori.png"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                        </div>
-                        <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
-                            <div
-                                class="flex justify-between items-center mb-4 md:mb-6">
-                                <h3
-                                    class="text-2xl md:text-4xl font-black tracking-tight">Sensori</h3>
-                                <span
-                                    class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-purple-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">AI/Research</span>
+                        <!-- Project 6: Music Recommendation -->
+                        <div class="glass-card w-full md:w-[calc(50%-1.25rem)] flex-shrink-0 overflow-hidden group">
+                            <div class="h-48 sm:h-60 md:h-80 relative overflow-hidden">
+                                <img
+                                    src="https://cdn.jsdelivr.net/gh/hzp4softwareengineering/HtetZawPaing@main/project4/sori9.png"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                             </div>
-                            <p
-                                class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-base md:text-lg"
-                                data-en="Real-time facial emotion analysis system. Utilizing deep learning to detect states to provide personalized music recommendations 24/7."
-                                data-mm="အသုံးပြုသူ၏ မျက်နှာကို ခွဲခြမ်းစိတ်ဖြာပြီး ပျော်ရွှင်ခြင်း၊ ဝမ်းနည်းခြင်း စသည့် စိတ်ခံစားမှုများပေါ် မူတည်ကာ သီချင်းများ အကြံပြုပေးသော Real-time AI စနစ် ဖြစ်ပါသည်။">Real-time
-                                facial emotion analysis system. Utilizing deep
-                                learning to detect states to provide
-                                personalized music recommendations 24/7.</p>
-                            <div class="flex flex-wrap gap-3 md:gap-6">
-                                <span
-                                    class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">Python</span>
-                                <span
-                                    class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">Tensorflow</span>
-                                <span
-                                    class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">OpenCV</span>
+                            <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
+                                <div
+                                    class="flex justify-between items-center mb-4 md:mb-6">
+                                    <h3
+                                        class="text-xl sm:text-2xl md:text-4xl font-black tracking-tight">Sori Music Recommendation</h3>
+                                    <span
+                                        class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-purple-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">AI/Music</span>
+                                </div>
+                                <p
+                                    class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-sm md:text-lg"
+                                    data-en="Built Sori, a personalized AI that uses real-time facial expression analysis to detect mood and instantly curate music, exploring AI that anticipates user needs."
+                                    data-mm="Sori ဆိုတာ မျက်နှာအမူအရာကို ချက်ချင်းသိရှိပြီး စိတ်ခံစားမှုအလိုက် သီချင်းရွေးပေးနိုင်တဲ့ ကိုယ်ပိုင် AI စနစ်တစ်ခု ဖြစ်ပါတယ်။ အသုံးပြုသူကို နားလည်ပြီး လိုအပ်ချက်ကို ကြိုတင်တုံ့ပြန်နိုင်ဖို့ ရည်ရွယ်ထားပါတယ်။">Built Sori, a personalized AI that uses real-time facial expression analysis to detect mood and instantly curate music, exploring AI that anticipates user needs.</p>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                                    <div class="flex flex-wrap gap-3 md:gap-4">
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">WebCam API</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">FaceAPI.JS</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">React</span>
+                                    </div>
+                                    <a href="https://www.htetzawpaing.site/projects/#sori-music-recommendation" class="ios-glass-btn px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-purple-600 hover:border-purple-500 whitespace-nowrap">
+                                        <span data-en="More Detailed" data-mm="အသေးစိတ်">More Detailed</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Project 2: Sensori -->
+                        <div class="glass-card w-full md:w-[calc(50%-1.25rem)] flex-shrink-0 overflow-hidden group">
+                            <div class="h-48 sm:h-60 md:h-80 relative overflow-hidden">
+                                <img
+                                    src="https://cdn.jsdelivr.net/gh/FlashChinchilla/images/sensori.png"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            </div>
+                            <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
+                                <div
+                                    class="flex justify-between items-center mb-4 md:mb-6">
+                                    <h3
+                                        class="text-xl sm:text-2xl md:text-4xl font-black tracking-tight">Sensori</h3>
+                                    <span
+                                        class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-purple-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">AI/Research</span>
+                                </div>
+                                <p
+                                    class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-sm md:text-lg"
+                                    data-en="Real-time facial emotion analysis system. Utilizing deep learning to detect states to provide personalized music recommendations 24/7."
+                                    data-mm="အသုံးပြုသူ၏ မျက်နှာကို ခွဲခြမ်းစိတ်ဖြာပြီး ပျော်ရွှင်ခြင်း၊ ဝမ်းနည်းခြင်း စသည့် စိတ်ခံစားမှုများပေါ် မူတည်ကာ သီချင်းများ အကြံပြုပေးသော Real-time AI စနစ် ဖြစ်ပါသည်။">Real-time
+                                    facial emotion analysis system. Utilizing deep
+                                    learning to detect states to provide
+                                    personalized music recommendations 24/7.</p>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                                    <div class="flex flex-wrap gap-3 md:gap-4">
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">Python</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">Tensorflow</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">OpenCV</span>
+                                    </div>
+                                    <a href="https://www.htetzawpaing.site/projects/#sensori-detection-system" class="ios-glass-btn px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-purple-600 hover:border-purple-500 whitespace-nowrap">
+                                        <span data-en="More Detailed" data-mm="အသေးစိတ်">More Detailed</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3: Secora Voice Command Assistant -->
+                        <div class="glass-card w-full md:w-[calc(50%-1.25rem)] flex-shrink-0 overflow-hidden group">
+                            <div class="h-48 sm:h-60 md:h-80 relative overflow-hidden">
+                                <img
+                                    src="https://cdn.jsdelivr.net/gh/hzp4softwareengineering/HtetZawPaing@main/project1/secora-voicecontrol2.png"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            </div>
+                            <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
+                                <div
+                                    class="flex justify-between items-center mb-4 md:mb-6">
+                                    <h3
+                                        class="text-xl sm:text-2xl md:text-2xl font-black tracking-tight">Voice Command Assistant</h3>
+                                    <span
+                                        class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-blue-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">AI/VOICE-COMMAND</span>
+                                </div>
+                                <p
+                                    class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-sm md:text-lg"
+                                    data-en="Built Secora Voice, a voice-activated system using NLP that understands user intent and executes complex commands, making technology interaction faster and more natural."
+                                    data-mm="အသုံးပြုသူ၏ ရည်ရွယ်ချက်ကို နားလည်ပြီး ရှုပ်ထွေးသော အမိန့်များကို လုပ်ဆောင်ပေးသည့် NLP ကို ​​အသုံးပြု၍ အသံဖြင့် အသက်သွင်းထားသော စနစ်တစ်ခုဖြစ်သည့် Secora Voice ကို တည်ဆောက်ခဲ့ပြီး နည်းပညာ အပြန်အလှန် ဆက်သွယ်မှုများကို ပိုမိုမြန်ဆန်ပြီး ပိုမိုသဘာဝကျစေပါသည်။">Built Secora Voice, a voice-activated system using NLP that understands user intent and executes complex commands, making technology interaction faster and more natural.</p>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                                    <div class="flex flex-wrap gap-3 md:gap-4">
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">Python</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">NLP</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">Speech Recog</span>
+                                    </div>
+                                    <a href="https://www.htetzawpaing.site/projects/#secora-voice-command-system" class="ios-glass-btn px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-600 hover:border-blue-500 whitespace-nowrap">
+                                        <span data-en="More Detailed" data-mm="အသေးစိတ်">More Detailed</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4: Sia Chatbot -->
+                        <div class="glass-card w-full md:w-[calc(50%-1.25rem)] flex-shrink-0 overflow-hidden group">
+                            <div class="h-48 sm:h-60 md:h-80 relative overflow-hidden">
+                                <img
+                                    src="https://cdn.jsdelivr.net/gh/hzp4softwareengineering/HtetZawPaing@main/project2/siachat4.png"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            </div>
+                            <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
+                                <div
+                                    class="flex justify-between items-center mb-4 md:mb-6">
+                                    <h3
+                                        class="text-xl sm:text-2xl md:text-4xl font-black tracking-tight">Sia Chatbot</h3>
+                                    <span
+                                        class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-purple-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">AI/CHATBOT</span>
+                                </div>
+                                <p
+                                    class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-sm md:text-lg"
+                                    data-en="I developed Sia, an intelligent 24/7 support agent that delivers instant, accurate help—from order tracking to complex policy explanations—without relying on human teams."
+                                    data-mm="လူသားအဖွဲ့တွေကို မှီခိုစရာမလိုဘဲ မှာယူမှုခြေရာခံခြင်းမှ ရှုပ်ထွေးသော မူဝါဒရှင်းလင်းချက်များအထိ ချက်ချင်းတိကျသော အကူအညီများကို ပေးဆောင်သည့် ဉာဏ်ရည်ထက်မြက်သော ၂၄/၇ ပံ့ပိုးမှုအေးဂျင့် Sia ကို ကျွန်ုပ် တီထွင်ခဲ့ပါသည်။">I developed Sia, an intelligent 24/7 support agent that delivers instant, accurate help—from order tracking to complex policy explanations—without relying on human teams.</p>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                                    <div class="flex flex-wrap gap-3 md:gap-4">
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">Node.JS</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">WebSocket</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-purple-500/80 uppercase">AI-Logic</span>
+                                    </div>
+                                    <a href="https://www.htetzawpaing.site/projects/#sia-chatbot" class="ios-glass-btn px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-purple-600 hover:border-purple-500 whitespace-nowrap">
+                                        <span data-en="More Detailed" data-mm="အသေးစိတ်">More Detailed</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 5: Emotion Detection -->
+                        <div class="glass-card w-full md:w-[calc(50%-1.25rem)] flex-shrink-0 overflow-hidden group">
+                            <div class="h-48 sm:h-60 md:h-80 relative overflow-hidden">
+                                <img
+                                    src="https://cdn.jsdelivr.net/gh/hzp4softwareengineering/HtetZawPaing@main/project3/sensori-dashboard.png"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                            </div>
+                            <div class="p-6 md:p-12 -mt-16 md:-mt-24 relative z-10">
+                                <div
+                                    class="flex justify-between items-center mb-4 md:mb-6">
+                                    <h3
+                                        class="text-xl sm:text-2xl md:text-4xl font-black tracking-tight">Emotion Detection</h3>
+                                    <span
+                                        class="px-3 py-1.5 md:px-5 md:py-2 glass-refractive text-blue-400 text-[8px] md:text-[10px] font-black uppercase rounded-full tracking-widest">AI/DETECTION</span>
+                                </div>
+                                <p
+                                    class="text-gray-400 leading-relaxed mb-6 md:mb-8 text-sm md:text-lg"
+                                    data-en="Premium cybersecurity marketplace offering specialized hardware, software, and 24/7 elite services including penetration testing and security monitoring."
+                                    data-mm="Sensori ဆိုတာ စိတ်ဆင်းရဲမှု ဒါမှမဟုတ် ဝမ်းနည်းမှုလိုမျိုး စိတ်ခံစားမှုတွေကို ထောက်လှမ်းပြီး ယုံကြည်စိတ်ချရတဲ့ အဆက်အသွယ်တွေကို အလိုအလျောက် သတိပေးဖို့အတွက် ကျွန်တော်တည်ဆောက်ထားတဲ့ အချိန်နဲ့တပြေးညီ စနစ်တစ်ခုဖြစ်ပြီး စိတ်ပိုင်းဆိုင်ရာ ကျန်းမာရေးကို ပံ့ပိုးပေးဖို့ လူသားစောင့်ရှောက်မှုနဲ့ ဒစ်ဂျစ်တယ်ခြေရာခံခြင်းကို ပေါင်းကူးပေးပါတယ်။">Premium
+                                    cybersecurity marketplace offering specialized
+                                    hardware, software, and 24/7 elite services
+                                    including penetration testing and security
+                                    monitoring.</p>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                                    <div class="flex flex-wrap gap-3 md:gap-4">
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">OpenCV</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">TensorFlow</span>
+                                        <span
+                                            class="text-[10px] md:text-[11px] font-bold text-blue-500/80 uppercase">Real-time API</span>
+                                    </div>
+                                    <a href="https://www.htetzawpaing.site/projects/#sensori-detection-system" class="ios-glass-btn px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-600 hover:border-blue-500 whitespace-nowrap">
+                                        <span data-en="More Detailed" data-mm="အသေးစိတ်">More Detailed</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Specialized Expertise -->
-        <section id="specialization" class="py-20 md:py-32 px-4 md:px-6">
+        <section id="specialization" class="py-20 md:py-32 px-4 md:px-6 relative overflow-hidden">
+             <!-- Space Decoration: Asteroid/Tech on Left -->
+             <div class="space-deco deco-left-asteroid"></div>
+
             <div
-                class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 md:gap-20 items-center">
+                class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 md:gap-20 items-center relative z-10">
                 <div class="lg:w-1/2 space-y-8">
-                    <h2
-                        class="text-3xl md:text-5xl font-bold tracking-tight section-title"><span
-                            data-en="SPECIALIZED IN"
-                            data-mm="ကျွမ်းကျင်မှု">SPECIALIZED
-                            IN</span><br /><span class="text-blue-500">SOFTWARE
-                            ENGINEERING</span></h2>
-                    <p
-                        class="text-base md:text-lg text-gray-500 leading-relaxed font-medium"
-                        data-en="Architecting high-performance systems with a focus on security and artificial intelligence."
-                        data-mm="လုံခြုံရေးနှင့် AI ကို အခြေခံထားသော စွမ်းဆောင်ရည်မြင့် စနစ်များကို တည်ဆောက်လျက်ရှိပါသည်။">Architecting
-                        high-performance systems with a focus on security and
-                        artificial intelligence.</p>
+                    <div class="reveal-text">
+                        <h2
+                            class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight section-title break-words"><span
+                                data-en="SPECIALIZED IN"
+                                data-mm="ကျွမ်းကျင်မှု">SPECIALIZED
+                                IN</span><br /><span class="text-blue-500">SOFTWARE
+                                ENGINEERING</span></h2>
+                        <p
+                            class="text-sm md:text-lg text-gray-500 leading-relaxed font-medium"
+                            data-en="Architecting high-performance systems with a focus on security and artificial intelligence."
+                            data-mm="လုံခြုံရေးနှင့် AI ကို အခြေခံထားသော စွမ်းဆောင်ရည်မြင့် စနစ်များကို တည်ဆောက်လျက်ရှိပါသည်။">Architecting
+                            high-performance systems with a focus on security and
+                            artificial intelligence.</p>
+                    </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div
-                            class="glass-card p-6 md:p-8 flex flex-col gap-4 group hover:bg-white/[0.02]">
+                            class="glass-card p-6 md:p-8 flex flex-col gap-4 group hover:bg-white/[0.02] reveal-text" style="transition-delay: 0.5s;">
                             <div
                                 class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
                                 <i data-lucide="shield-check"
@@ -939,7 +1305,7 @@
                                 Systems</span>
                         </div>
                         <div
-                            class="glass-card p-6 md:p-8 flex flex-col gap-4 group hover:bg-white/[0.02]">
+                            class="glass-card p-6 md:p-8 flex flex-col gap-4 group hover:bg-white/[0.02] reveal-text" style="transition-delay: 0.6s;">
                             <div
                                 class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
                                 <i data-lucide="cpu" class="w-6 h-6"></i>
@@ -952,7 +1318,7 @@
                 </div>
 
                 <div class="lg:w-1/2 w-full space-y-10">
-                    <div class="space-y-3">
+                    <div class="space-y-3 reveal-text" style="transition-delay: 0.7s;">
                         <div
                             class="flex justify-between text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
                             <span data-en="Front & Backend Systems" data-mm="ရှေ့နှင့်နောက်ပိုင်း စနစ်များ">Front & Backend Systems</span>
@@ -965,7 +1331,7 @@
                                 style="width: 98%"></div>
                         </div>
                     </div>
-                    <div class="space-y-3">
+                    <div class="space-y-3 reveal-text" style="transition-delay: 0.8s;">
                         <div
                             class="flex justify-between text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
                             <span data-en="Web Technologies" data-mm="ဝက်ဘ် နည်းပညာများ">Web Technologies</span>
@@ -978,7 +1344,7 @@
                                 style="width: 92%"></div>
                         </div>
                     </div>
-                    <div class="space-y-3">
+                    <div class="space-y-3 reveal-text" style="transition-delay: 0.9s;">
                         <div
                             class="flex justify-between text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
                             <span data-en="AI Research" data-mm="AI သုတေသန">AI Research</span>
@@ -996,24 +1362,27 @@
         </section>
 
         <!-- News & Insights -->
-        <section id="news" class="py-20 md:py-32 px-4 md:px-6">
-            <div class="max-w-7xl mx-auto">
+        <section id="news" class="py-20 md:py-32 px-4 md:px-6 relative overflow-hidden">
+             <!-- Space Decoration: Stars on Right -->
+             <div class="space-deco deco-right-stars"></div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
                 <div
-                    class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                    <div>
+                    class="flex flex-col md:flex-row justify-between md:items-end mb-12 gap-6">
+                    <div class="reveal-text">
                         <h2
-                            class="text-3xl md:text-5xl font-bold tracking-tight mb-3 section-title"><span
+                            class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 section-title"><span
                                 data-en="News &" data-mm="သတင်းနှင့်">News
                                 &</span> <span class="text-blue-500"
                                 data-en="Insights"
                                 data-mm="အမြင်များ">Insights</span></h2>
                         <p
-                            class="text-gray-500 text-base md:text-lg font-medium"
+                            class="text-gray-500 text-sm md:text-lg font-medium"
                             data-en="Latest breakthroughs from my research lab."
                             data-mm="နောက်ဆုံးရ သုတေသနနှင့် နည်းပညာ သတင်းများ။">Latest
                             breakthroughs from my research lab.</p>
                     </div>
-                    <div class="flex gap-3">
+                    <div class="flex gap-3 self-end md:self-auto reveal-text" style="transition-delay: 0.5s;">
                         <button id="news-prev"
                             class="ios-glass-btn w-10 h-10 rounded-full bg-white/10 border-white/20 hover:bg-white/20 hover:border-white/40"><i
                                 data-lucide="chevron-left"
@@ -1026,19 +1395,19 @@
                 </div>
 
                 <!-- Carousel Viewport -->
-                <div class="overflow-hidden">
+                <div class="overflow-hidden reveal-text" style="transition-delay: 0.6s;">
                     <!-- Carousel Track -->
                     <div id="news-track"
                         class="flex gap-4 md:gap-6 transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
                         <!-- News 1 -->
                         <div
-                            class="news-card glass-card group flex flex-col w-[85vw] md:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
+                            class="news-card glass-card group flex flex-col w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
                             <div class="p-6 md:p-8 space-y-4 flex-grow">
                                 <div
                                     class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">April
                                     2025 • E-Commerce</div>
                                 <h3
-                                    class="text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors"
+                                    class="text-lg md:text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors"
                                     data-en="The Development Process of Secora"
                                     data-mm="Secora တည်ထောင်မှု လုပ်ငန်းစဉ်">The
                                     Development Process of Secora</h3>
@@ -1059,13 +1428,13 @@
                         </div>
                         <!-- News 2 -->
                         <div
-                            class="news-card glass-card group flex flex-col w-[85vw] md:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
+                            class="news-card glass-card group flex flex-col w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
                             <div class="p-6 md:p-8 space-y-4 flex-grow">
                                 <div
                                     class="text-[9px] font-bold text-purple-400 uppercase tracking-widest">Oct
                                     2025 • Network - Security</div>
                                 <h3
-                                    class="text-xl font-bold leading-tight group-hover:text-purple-400 transition-colors"
+                                    class="text-lg md:text-xl font-bold leading-tight group-hover:text-purple-400 transition-colors"
                                     data-en="MTS Network Security Project"
                                     data-mm="MTS ကွန်ရက်လုံခြုံရေးစီမံကိန်း">MTS
                                     Network Security Project</h3>
@@ -1088,13 +1457,13 @@
                         </div>
                         <!-- News 3 -->
                         <div
-                            class="news-card glass-card group flex flex-col w-[85vw] md:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
+                            class="news-card glass-card group flex flex-col w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
                             <div class="p-6 md:p-8 space-y-4 flex-grow">
                                 <div
                                     class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Sep
                                     2025 • AI - Research</div>
                                 <h3
-                                    class="text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors"
+                                    class="text-lg md:text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors"
                                     data-en="Sensori Research Project"
                                     data-mm="Sensori သုတေသန Project">Sensori
                                     Research Project</h3>
@@ -1117,13 +1486,13 @@
                         </div>
                         <!-- News 4 -->
                         <div
-                            class="news-card glass-card group flex flex-col w-[85vw] md:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
+                            class="news-card glass-card group flex flex-col w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] flex-shrink-0 bg-white/[0.015]">
                             <div class="p-6 md:p-8 space-y-4 flex-grow">
                                 <div
                                     class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Jan
                                     2026 • Deep Learning - Research</div>
                                 <h3
-                                    class="text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors"
+                                    class="text-lg md:text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors"
                                     data-en="Machine Learning"
                                     data-mm="Machine Learning">Machine
                                     Learning</h3>
@@ -1161,42 +1530,42 @@
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-20 relative z-10">
                 <!-- Left Column: Branding & Contact Info -->
                 <div class="space-y-10">
-                    <div class="space-y-6">
-                        <h2 class="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+                    <div class="space-y-6 reveal-text">
+                        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight leading-tight">
                             <span data-en="Let's" data-mm="အတူ">Let's</span> <span class="text-blue-500" data-en="Collaborate" data-mm="ပူးပေါင်းဆောင်ရွက်">Collaborate</span><br>
                             <span class="text-white/30" data-en="The Future." data-mm="အနာဂတ်အတွက်">The Future.</span>
                         </h2>
-                        <p class="text-gray-400 text-lg leading-relaxed max-w-md font-medium"
+                        <p class="text-gray-400 text-base md:text-lg leading-relaxed max-w-md font-medium"
                            data-en="Have an innovative idea or a project in mind? Send me a message directly and let's build the future together." 
                            data-mm="ဆန်းသစ်သော စိတ်ကူးများ၊ စီမံကိန်းများရှိပါသလား။ စာပို့၍ ဆွေးနွေးတိုင်ပင်နိုင်ပါသည်။">
                             Have an innovative idea or a project in mind? Send me a message directly and let's build the future together.
                         </p>
                     </div>
                     
-                    <div class="space-y-6 pt-4">
+                    <div class="space-y-6 pt-4 reveal-text" style="transition-delay: 0.5s;">
                         <a href="tel:+959456751882" class="flex items-center gap-5 group">
                             <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-blue-500/20 group-hover:border-blue-500/50 transition-all duration-300">
                                 <i data-lucide="phone" class="w-5 h-5 text-gray-400 group-hover:text-blue-400"></i>
                             </div>
                             <div>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-en="Call Me" data-mm="ဖုန်းခေါ်ဆိုရန်">Call Me</p>
-                                <p class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">+95 9456751882</p>
+                                <p class="text-base sm:text-lg font-bold text-white group-hover:text-blue-400 transition-colors">+95 9456751882</p>
                             </div>
                         </a>
                         
-                        <a href="mailto:hzp.4aibotresearch@gmail.com" class="flex items-center gap-5 group">
+                        <a href="mailto:contact@htetzawpaing.site" class="flex items-center gap-5 group">
                             <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-purple-500/20 group-hover:border-purple-500/50 transition-all duration-300">
                                 <i data-lucide="mail" class="w-5 h-5 text-gray-400 group-hover:text-purple-400"></i>
                             </div>
                             <div>
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-en="Email Me" data-mm="အီးမေးလ်ပို့ရန်">Email Me</p>
-                                <p class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">hzp.4aibotresearch@gmail.com</p>
+                                <p class="text-base sm:text-lg font-bold text-white group-hover:text-purple-400 transition-colors break-all">contact@htetzawpaing.site</p>
                             </div>
                         </a>
                     </div>
                     
                     <!-- Social Links -->
-                    <div class="flex flex-wrap gap-3 pt-4">
+                    <div class="flex flex-wrap gap-3 pt-4 reveal-text" style="transition-delay: 0.6s;">
                         <a href="https://github.com/hzp4softwareengineering" target="_blank"
                             class="w-12 h-12 rounded-2xl flex items-center justify-center glass-card hover:bg-[#c90076] hover:border-[#c90076] text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1">
                             <i data-lucide="github" class="w-5 h-5"></i>
@@ -1213,7 +1582,7 @@
                 </div>
 
                 <!-- Right Column: Contact Form -->
-                <div class="glass-card p-8 md:p-10 bg-white/[0.02] border border-white/10 rounded-3xl relative overflow-hidden">
+                <div class="glass-card p-8 md:p-10 bg-white/[0.02] border border-white/10 rounded-3xl relative overflow-hidden reveal-text" style="transition-delay: 0.7s;">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
                     
                     <form id="direct-email-form" class="space-y-5 relative z-10">
@@ -1247,7 +1616,7 @@
 
             <!-- Bottom Bar: Copyright & Status -->
             <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-center md:text-left">
                     <span class="text-xl font-bold tracking-tight text-white">HZP<span class="text-blue-600">.</span></span>
                     <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">
                         &copy; 2026 Htet Zaw Paing. <span data-en="All Rights Reserved." data-mm="မူပိုင်ခွင့်များ ရယူထားပြီး။">All Rights Reserved.</span>
@@ -1364,24 +1733,44 @@
             });
         });
 
-        // Scroll Animation Observer
-        const revealObs = new IntersectionObserver((entries) => {
+        // -----------------------------------------------------------------
+        // SCROLL REVEAL ANIMATIONS (SPACE, TEXT & MATERIALIZING GLASS)
+        // -----------------------------------------------------------------
+        
+        // Setup options for the observer
+        const observerOptions = {
+            root: null, // Use viewport
+            threshold: 0.15, // Trigger when 15% visible
+            rootMargin: "0px"
+        };
+
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    // Space Decorations
+                    if (entry.target.classList.contains('space-deco')) {
+                        entry.target.classList.add('active-deco');
+                    }
+                    // Text/Cards
+                    if (entry.target.classList.contains('reveal-text')) {
+                        entry.target.classList.add('active-text');
+                    }
+                    // Trigger Materializing Glass
+                    if (entry.target.classList.contains('glass-card')) {
+                        entry.target.classList.add('active-glass');
+                    }
+                    
+                    // Stop observing once animated (optional: prevents re-animation)
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
-        document.querySelectorAll('section').forEach(s => {
-            if(s.id !== 'home') {
-                s.style.transition = 'all 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                s.style.opacity = '0';
-                s.style.transform = 'translateY(30px)';
-                revealObs.observe(s);
-            }
+        // Observe elements
+        document.querySelectorAll('.space-deco, .reveal-text, .glass-card').forEach(el => {
+            scrollObserver.observe(el);
         });
+
 
         // News Carousel Logic
         const track = document.getElementById('news-track');
@@ -1394,9 +1783,19 @@
         function updateCarousel() {
             if(cards.length === 0) return;
             
-            const cardWidth = cards[0].offsetWidth;
-            const gap = window.innerWidth >= 768 ? 24 : 16; // Adjust gap matching CSS
-            const itemsPerView = window.innerWidth >= 768 ? 3 : 1;
+            // Robust calculation for width (handle hidden elements)
+            const cardWidth = cards[0].getBoundingClientRect().width || cards[0].offsetWidth;
+            
+            // CSS: gap-4 (16px) on mobile, md:gap-6 (24px)
+            const gap = window.innerWidth >= 768 ? 24 : 16;
+            
+            // Logic to match CSS: 1 on mobile, 2 on tablet (md), 3 on desktop (lg)
+            let itemsPerView = 1;
+            if (window.innerWidth >= 1024) {
+                itemsPerView = 3;
+            } else if (window.innerWidth >= 768) {
+                itemsPerView = 2;
+            }
             
             // Calculate max index: total - visible
             const maxIndex = Math.max(0, cards.length - itemsPerView);
@@ -1416,12 +1815,16 @@
             }
 
             const moveAmount = (cardWidth + gap) * currentIndex;
-            track.style.transform = `translateX(-${moveAmount}px)`;
+            if(track) track.style.transform = `translateX(-${moveAmount}px)`;
         }
 
         if(nextBtn) {
             nextBtn.addEventListener('click', () => {
-                const itemsPerView = window.innerWidth >= 768 ? 3 : 1;
+                // Determine step size dynamically based on view
+                let itemsPerView = 1;
+                if (window.innerWidth >= 1024) itemsPerView = 3;
+                else if (window.innerWidth >= 768) itemsPerView = 2;
+
                 if (currentIndex < cards.length - itemsPerView) {
                     currentIndex++;
                     updateCarousel();
@@ -1438,12 +1841,71 @@
             });
         }
 
+        // Projects Carousel Logic
+        const projectsTrack = document.getElementById('projects-track');
+        const projectsPrevBtn = document.getElementById('projects-prev');
+        const projectsNextBtn = document.getElementById('projects-next');
+        const projectCards = document.querySelectorAll('#projects-track .glass-card'); // Use specific selector
+
+        let currentProjectIndex = 0;
+
+        function updateProjectsCarousel() {
+            if(projectCards.length === 0) return;
+            
+            // Projects uses gap-6 (24px) on mobile, gap-10 (40px) on desktop (md)
+            const cardWidth = projectCards[0].getBoundingClientRect().width || projectCards[0].offsetWidth;
+            const gap = window.innerWidth >= 768 ? 40 : 24; 
+            const itemsPerView = window.innerWidth >= 768 ? 2 : 1;
+            
+            const maxIndex = Math.max(0, projectCards.length - itemsPerView);
+            
+            if (currentProjectIndex > maxIndex) currentProjectIndex = maxIndex;
+            if (currentProjectIndex < 0) currentProjectIndex = 0;
+
+            if(projectsPrevBtn) {
+                projectsPrevBtn.style.opacity = currentProjectIndex === 0 ? '0.3' : '1';
+                projectsPrevBtn.style.pointerEvents = currentProjectIndex === 0 ? 'none' : 'auto';
+            }
+            if(projectsNextBtn) {
+                projectsNextBtn.style.opacity = currentProjectIndex >= maxIndex ? '0.3' : '1';
+                projectsNextBtn.style.pointerEvents = currentProjectIndex >= maxIndex ? 'none' : 'auto';
+            }
+
+            const moveAmount = (cardWidth + gap) * currentProjectIndex;
+            if(projectsTrack) projectsTrack.style.transform = `translateX(-${moveAmount}px)`;
+        }
+
+        if(projectsNextBtn) {
+            projectsNextBtn.addEventListener('click', () => {
+                const itemsPerView = window.innerWidth >= 768 ? 2 : 1;
+                if (currentProjectIndex < projectCards.length - itemsPerView) {
+                    currentProjectIndex++;
+                    updateProjectsCarousel();
+                }
+            });
+        }
+
+        if(projectsPrevBtn) {
+            projectsPrevBtn.addEventListener('click', () => {
+                if (currentProjectIndex > 0) {
+                    currentProjectIndex--;
+                    updateProjectsCarousel();
+                }
+            });
+        }
+
         window.addEventListener('resize', () => {
             currentIndex = 0;
+            currentProjectIndex = 0;
             updateCarousel();
+            updateProjectsCarousel();
         });
 
-        setTimeout(updateCarousel, 100);
+        // Initial Calls
+        setTimeout(() => {
+            updateCarousel();
+            updateProjectsCarousel();
+        }, 100);
 
         // Contact Form Logic (Real Mailto Generation)
         const contactForm = document.getElementById('direct-email-form');
@@ -1459,7 +1921,7 @@
                 const fullBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
                 
                 // Construct the mailto link
-                const mailtoLink = `mailto:hzp.4aibotresearch@gmail.com?subject=${encodeURIComponent(subject)}&body=${fullBody}`;
+                const mailtoLink = `mailto:contact@htetzawpaing.site?subject=${encodeURIComponent(subject)}&body=${fullBody}`;
                 
                 // Open default mail client
                 window.location.href = mailtoLink;
@@ -1467,4 +1929,4 @@
         }
     </script>
     </body>
-</html>
+</html> 
